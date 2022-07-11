@@ -10,7 +10,7 @@ rss_feed = "https://wid.cert-bund.de/content/public/securityAdvisory/rss"
 
 config_path="../config/"
 
-def send_mail(item)
+def send_mail(item, config_path)
 
   wid = item.link.split("=")[1]
   timestamp = item.pubDate.localtime
@@ -59,7 +59,7 @@ URI.open(rss_feed) do |rss|
       puts "Item date: #{item.pubDate}"
       puts "Item category: #{item.category.content}"
       puts "Item WID: #{item_wid}"
-      send_mail(item)
+      send_mail(item, config_path)
     else
       break
     end

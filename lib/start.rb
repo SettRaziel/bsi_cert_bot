@@ -53,13 +53,15 @@ URI.open(rss_feed) do |rss|
   feed.items.each { |item|
     item_wid = item.link.split("=")[1]
     if (!item_wid.eql?(input_wid) && !item.pubDate.eql?(input_time))
-      puts "Item: #{item.title}"
-      puts "Item description: #{item.description}"
-      puts "Item link: #{item.link}"
-      puts "Item date: #{item.pubDate}"
-      puts "Item category: #{item.category.content}"
-      puts "Item WID: #{item_wid}"
-      send_mail(item, config_path)
+      if (item.category.content.eql?("hoch") || item.category.content.eql?("kritisch"))
+        puts "Item: #{item.title}"
+        puts "Item description: #{item.description}"
+        puts "Item link: #{item.link}"
+        puts "Item date: #{item.pubDate}"
+        puts "Item category: #{item.category.content}"
+        puts "Item WID: #{item_wid}"
+        send_mail(item, config_path)
+      end
     else
       break
     end

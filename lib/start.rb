@@ -18,7 +18,7 @@ def send_mail(item, config_path)
   
   message = "From: CERT RSS <#{config.config_hash["from"]}>\n"
   message.concat("To: #{config.config_hash["to"]}\n")
-  message.concat("Subject: CERT Report (#{wid})\n\n")
+  message.concat("Subject: CERT Report (#{wid}) - #{item.title.split(":")[0]}\n\n")
   message.concat("Our CERT RSS Feed received a new security advisory:\n\n")
   message.concat("Title: #{item.title}\n")
   message.concat("Description: #{item.description}\n")

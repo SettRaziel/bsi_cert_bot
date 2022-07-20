@@ -3,6 +3,13 @@ Simple Mailbot that checks the BSI CERT RSS feed and parses CERT
 reports to be send to the given mail address.
 
 ## Help & Usage
+### Installation
+* clone the repository
+* run `bundle install` to get the required gems
+* setup config.json
+* run main script `ruby start.rb` in lib directory
+
+### Configuration
 Specify JSON parameters for usage in config.json
 ```
 {

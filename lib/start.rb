@@ -2,6 +2,8 @@ require "rss"
 require "open-uri"
 require "net/smtp"
 require "pathname"
+require "net/http"
+require "json"
 
 require_relative "configuration"
 
@@ -9,6 +11,36 @@ require_relative "configuration"
 rss_feed = "https://wid.cert-bund.de/content/public/securityAdvisory/rss"
 
 config_path="../config/"
+
+def filter_flat_map(list, type) 
+  list["children"].flat_map {|child| 
+    yield child if child["type"] == type 
+  }.compact
+end
+
+def retrieve_cves(wid)
+  uuid_url = "https://wid.cert-bund.de/content/public/securityAdvisory/kurzinfo-uuid-by-name/#{wid}"
+  wid_request = Net::HTTP.get(URI(uuid_url))
+  cert_url = "https://wid.cert-bund.de/content/public/content/#{JSON.parse(wid_request)}"
+  cert_request = Net::HTTP.get(URI(cert_url))
+  cert_json = JSON.parse(cert_request)
+  cve_list = filter_flat_map(cert_json, "cveIdListe") {|cve_id_list| filter_flat_map(cve_id_list, "cveId") {|note| note["properties"] } }
+
+  cves = "CVEs: "
+  counter = 0
+  cve_list.each { |cve_id|
+    cves.concat(cve_id["cveId"]).concat(" ")
+    counter += 1
+
+    # write only 5 cve per line then make linebreak
+    if (counter == 5)
+      cves.concat("\n")
+      6.times { cves.concat(" ") }
+      counter = 0
+    end
+  }
+  cves
+end  
 
 def send_mail(item, config_path)
 
@@ -24,6 +56,7 @@ def send_mail(item, config_path)
   message.concat("Description: #{item.description}\n")
   message.concat("Link: #{item.link}\n")
   message.concat("Date: #{timestamp}\n")
+  message.concat("#{retrieve_cves(wid)}\n")
   message.concat("Severity: #{item.category.content}\n")
   message.concat("WID: #{wid}\n\n")
   message.concat("Best wishes,\n")

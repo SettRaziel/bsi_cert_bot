@@ -19,6 +19,7 @@ module MailAgent
     message.concat("Link: #{item.link}\n")
     message.concat("Date: #{timestamp}\n")
     message.concat("#{retrieve_cves(wid)}\n")
+    message.concat("#{retrieve_affected_products(wid)}")
     message.concat("Severity: #{item.category.content}\n")
     message.concat("WID: #{wid}\n\n")
     message.concat("Best wishes,\n")
@@ -48,6 +49,17 @@ module MailAgent
       end
     }
     cves
+  end 
+
+  private_class_method def self.retrieve_affected_products(wid)
+    product_list = AdvisoryParser.retrieve_affected_products(wid)
+
+    affected_products = "Affected versions:\n"
+    product_list.each { |product|
+      6.times { affected_products.concat(" ") }
+      affected_products.concat(product["name"]).concat("\n")
+    }
+    affected_products
   end 
 
 end

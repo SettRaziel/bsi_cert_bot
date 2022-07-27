@@ -5,10 +5,17 @@ require "pathname"
 class RssHandler
 
   def initialize(rss_feed, config_path)
-    read_feed(rss_feed, config_path)    
+    @debug_log = File.open(Pathname.new(config_path).join("debug.log").expand_path, mode="a")
+    @debug_log.puts("Starting rss parsing at #{Time.now}.")
+    read_feed(rss_feed, config_path)
+    @debug_log.puts("Finishing rss parsing at #{Time.now}.")
+    @debug_log.puts
+    @debug_log.close
   end
 
   private
+
+  attr_accessor :debug_log
 
   def read_feed(rss_feed, config_path)
     URI.open(rss_feed) do |rss|
@@ -16,17 +23,12 @@ class RssHandler
       meta_data = read_meta_data(meta_path)
 
       feed = RSS::Parser.parse(rss)
-      puts "Title: #{feed.channel.title}"
       feed.items.each { |item|
         item_wid = item.link.split("=")[1]
+        @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
         if (!item_wid.eql?(meta_data.wid) && !item.pubDate.eql?(meta_data.timestamp))
           if (item.category.content.eql?("hoch") || item.category.content.eql?("kritisch"))
-            puts "Item: #{item.title}"
-            puts "Item description: #{item.description}"
-            puts "Item link: #{item.link}"
-            puts "Item date: #{item.pubDate}"
-            puts "Item category: #{item.category.content}"
-            puts "Item WID: #{item_wid}"
+            @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
             MailAgent.send_mail(item, config_path)
           end
         else
@@ -52,8 +54,9 @@ class RssHandler
     output.puts("Item WID: #{item.link.split("=")[1]}")
     output.puts("Item date: #{item.pubDate.localtime}")
     output.close
-    puts "Saved WID: #{item.link.split("=")[1]}"
-    puts "Saved Date: #{item.pubDate.localtime}"
+    @debug_log.puts("Writing meta data for delta at #{Time.now}:")
+    @debug_log.puts("Saved WID: #{item.link.split("=")[1]}")
+    @debug_log.puts("Saved Date: #{item.pubDate.localtime}")
     nil
   end
 

@@ -52,6 +52,8 @@ class RssHandler
     output.puts("Item WID: #{item.link.split("=")[1]}")
     output.puts("Item date: #{item.pubDate.localtime}")
     output.close
+    puts "Saved WID: #{item.link.split("=")[1]}"
+    puts "Saved Date: #{item.pubDate.localtime}"
     nil
   end
 

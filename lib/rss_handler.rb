@@ -2,6 +2,8 @@ require "rss"
 require "open-uri"
 require "pathname"
 
+require_relative "csv_accessor"
+
 class RssHandler
 
   def initialize(rss_feed, config_path)
@@ -18,46 +20,38 @@ class RssHandler
   attr_accessor :debug_log
 
   def read_feed(rss_feed, config_path)
-    URI.open(rss_feed) do |rss|
-      meta_path = Pathname.new(config_path).join("meta_info").expand_path
-      meta_data = read_meta_data(meta_path)
+    meta_path = Pathname.new(config_path).join("meta_info").expand_path
+    csv_accessor = init_csv_accessor(meta_path)
 
+    URI.open(rss_feed) do |rss|
       feed = RSS::Parser.parse(rss)
       feed.items.each { |item|
         item_wid = item.link.split("=")[1]
+        item_timestamp = item.pubDate.localtime
         @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
-        if (!item_wid.eql?(meta_data.wid) && !item.pubDate.eql?(meta_data.timestamp))
+        if (!contains_values?(item_wid, item_timestamp, csv_accessor.data))
           if (item.category.content.eql?("hoch") || item.category.content.eql?("kritisch"))
             @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
+            csv_accessor.append_row( [ item_wid, item_timestamp ])
             MailAgent.send_mail(item, config_path)
           end
-        else
-          break
         end
       }
 
-      write_meta_data(meta_path, feed.items.first)
     end
   end
 
-  def read_meta_data(meta_path)
-    if (meta_path.exist?)
-      input = File.readlines(meta_path)
-      return MetaData.new(input[0].split(":")[1].strip,
-                   Time.parse(input[1].split(":")[1]))
-    end
-    MetaData.new()
+  def contains_values?(item_wid, item_timestamp, data)
+    data.each { |line|
+      return true if (line[0].eql?(item_wid) && Time.parse(line[1]).eql?(item_timestamp))
+    }
+    false
   end
-  
-  def write_meta_data(meta_path, item)
-    output = File.open(meta_path, mode="w+")
-    output.puts("Item WID: #{item.link.split("=")[1]}")
-    output.puts("Item date: #{item.pubDate.localtime}")
-    output.close
-    @debug_log.puts("Writing meta data for delta at #{Time.now}:")
-    @debug_log.puts("Saved WID: #{item.link.split("=")[1]}")
-    @debug_log.puts("Saved Date: #{item.pubDate.localtime}")
-    nil
+
+  def init_csv_accessor(meta_path)
+    csv_accessor = CsvAccessor.new(meta_path, ";")
+    csv_accessor.read_csv if meta_path.file?
+    csv_accessor
   end
 
 end

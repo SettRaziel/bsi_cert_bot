@@ -35,16 +35,16 @@ module MailAgent
   private_class_method def self.retrieve_cves(wid)
     cve_list = AdvisoryParser.retrieve_cves(wid)
 
-    cves = "CVEs: "
+    cves = "CVEs:"
     counter = 0
     cve_list.each { |cve_id|
-      cves.concat(cve_id["cveId"]).concat(" ")
+      cves.concat(" ").concat(cve_id["cveId"])
       counter += 1
 
       # write only 5 cve per line then make linebreak
       if (counter == 5)
         cves.concat("\n")
-        6.times { cves.concat(" ") }
+        5.times { cves.concat(" ") }
         counter = 0
       end
     }

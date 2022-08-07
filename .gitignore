@@ -2,3 +2,7 @@ Gemfile.lock
 
 # add config folder to ignore
 config/
+
+# add ignore to code coverage data
+coverage/
+doc/

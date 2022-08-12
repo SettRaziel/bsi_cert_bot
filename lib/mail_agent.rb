@@ -5,10 +5,10 @@ require_relative "advisory_parser"
 
 module MailAgent
 
-  def self.send_mail(item, config_path)
+  def self.send_mail(item, config_file)
     wid = item.link.split("=")[1]
     timestamp = item.pubDate.localtime
-    config = Configuration.new(Pathname.new(config_path).join("config.json").expand_path)
+    config = Configuration.new(Pathname.new(config_file))
     
     message = "From: CERT RSS <#{config.config_hash["from"]}>\n"
     message.concat("To: #{config.config_hash["to"]}\n")

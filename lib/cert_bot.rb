@@ -17,12 +17,6 @@ module CertBot
     def initialize(arguments)
       @parameter_handler = Parameter::ParameterHandler.new(arguments)
 
-      if (!parameter_handler.repository.parameters[:help] && 
-          !parameter_handler.repository.parameters[:version])
-        rss_feed = "https://wid.cert-bund.de/content/public/securityAdvisory/rss"
-        config_path ="../config/"
-        RssHandler.new(rss_feed, config_path)
-      end
     end
 
     private
@@ -32,6 +26,15 @@ module CertBot
       @parameter_handler.repository.parameters[symbol] != nil
     end
 
+  end
+
+  def self.parse_rss
+      if (!parameter_handler.repository.parameters[:help] && 
+          !parameter_handler.repository.parameters[:version])
+        rss_feed = "https://wid.cert-bund.de/content/public/securityAdvisory/rss"
+        config_file = @parameter_handler.repository.parameters[:file]
+        RssHandler.new(rss_feed, config_file)
+      end
   end
 
   # call to print the help text

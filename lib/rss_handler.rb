@@ -6,10 +6,11 @@ require_relative "csv_accessor"
 
 class RssHandler
 
-  def initialize(rss_feed, config_path)
-    @debug_log = File.open(Pathname.new(config_path).join("debug.log").expand_path, mode="a")
+  def initialize(rss_feed, config_file)
+    @config_path = Pathname.new(config_file).dirname.expand_path
+    @debug_log = File.open(@config_path.join("debug.log"), mode="a")
     @debug_log.puts("Starting rss parsing at #{Time.now}.")
-    read_feed(rss_feed, config_path)
+    read_feed(rss_feed, config_file)
     @debug_log.puts("Finishing rss parsing at #{Time.now}.")
     @debug_log.puts
     @debug_log.close
@@ -17,11 +18,11 @@ class RssHandler
 
   private
 
+  attr_accessor :config_path
   attr_accessor :debug_log
 
-  def read_feed(rss_feed, config_path)
-    meta_path = Pathname.new(config_path).join("meta_info").expand_path
-    csv_accessor = init_csv_accessor(meta_path)
+  def read_feed(rss_feed, config_file)
+    csv_accessor = init_csv_accessor(Pathname.new(@config_path).join("meta_info").expand_path)
 
     URI.open(rss_feed) do |rss|
       feed = RSS::Parser.parse(rss)
@@ -33,7 +34,7 @@ class RssHandler
           if (item.category.content.eql?("hoch") || item.category.content.eql?("kritisch"))
             @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
             csv_accessor.append_row( [ item_wid, item_timestamp ])
-            MailAgent.send_mail(item, config_path)
+            MailAgent.send_mail(item, config_file)
           end
         end
       }

@@ -10,7 +10,7 @@ begin
   elsif (parameter_handler.repository.parameters[:version])
     CertBot.print_version
   else
-    puts CertBot.output_forecast
+    CertBot.parse_rss
   end
 
 rescue StandardError, NotImplementedError => e

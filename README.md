@@ -7,7 +7,7 @@ reports to be send to the given mail address.
 * clone the repository
 * run `bundle install` to get the required gems
 * setup config.json
-* run main script `ruby start.rb` in lib directory
+* run main script `ruby cert_bot.rb -f <path_to_config.json>` in the bin directory
 
 ### Configuration
 Specify JSON parameters for usage in config.json

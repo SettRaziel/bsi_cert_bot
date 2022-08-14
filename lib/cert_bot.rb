@@ -2,7 +2,6 @@ require_relative "mail_agent"
 require_relative "cert_bot/parameter"
 require_relative "rss_handler"
 
-
 # This module is the main entry point and will be called from the main forecast script
 module CertBot
   

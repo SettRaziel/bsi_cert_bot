@@ -3,14 +3,15 @@ require "open-uri"
 require "pathname"
 
 require_relative "csv_accessor"
+require_relative "cert_bot/data"
 
 class RssHandler
 
-  def initialize(rss_feed, config_file)
+  def initialize(rss_feed, config_file, severities)
     @config_path = Pathname.new(config_file).dirname.expand_path
     @debug_log = File.open(@config_path.join("debug.log"), mode="a")
     @debug_log.puts("Starting rss parsing at #{Time.now}.")
-    read_feed(rss_feed, config_file)
+    read_feed(rss_feed, config_file, severities)
     @debug_log.puts("Finishing rss parsing at #{Time.now}.")
     @debug_log.puts
     @debug_log.close
@@ -21,7 +22,7 @@ class RssHandler
   attr_accessor :config_path
   attr_accessor :debug_log
 
-  def read_feed(rss_feed, config_file)
+  def read_feed(rss_feed, config_file, severities)
     csv_accessor = init_csv_accessor(Pathname.new(@config_path).join("meta_info").expand_path)
 
     URI.open(rss_feed) do |rss|
@@ -31,7 +32,7 @@ class RssHandler
         item_timestamp = item.pubDate.localtime
         @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
         if (!contains_values?(item_wid, item_timestamp, csv_accessor.data))
-          if (item.category.content.eql?("hoch") || item.category.content.eql?("kritisch"))
+          if (contains_severity?(severities, item.category.content))
             @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
             csv_accessor.append_row( [ item_wid, item_timestamp ])
             MailAgent.send_mail(item, config_file)
@@ -53,6 +54,10 @@ class RssHandler
     csv_accessor = CsvAccessor.new(meta_path, ";")
     csv_accessor.read_csv if meta_path.file?
     csv_accessor
+  end
+
+  def contains_severity?(categories, severity_string)
+    categories.include?(CertBot::Data::Severity.get_mapping_for(severity_string))
   end
 
 end

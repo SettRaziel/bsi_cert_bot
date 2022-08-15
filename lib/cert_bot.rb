@@ -1,6 +1,7 @@
 require_relative "mail_agent"
 require_relative "cert_bot/parameter"
 require_relative "rss_handler"
+require_relative "cert_bot/data"
 
 # This module is the main entry point and will be called from the main forecast script
 module CertBot
@@ -15,7 +16,7 @@ module CertBot
     # @param [Array] arguments the input values from the terminal input ARGV
     def initialize(arguments)
       @parameter_handler = Parameter::ParameterHandler.new(arguments)
-
+      CertBot::Data::Severity.initialize
     end
 
     private
@@ -32,7 +33,11 @@ module CertBot
           !parameter_handler.repository.parameters[:version])
         rss_feed = "https://wid.cert-bund.de/content/public/securityAdvisory/rss"
         config_file = @parameter_handler.repository.parameters[:file]
-        RssHandler.new(rss_feed, config_file)
+        severity = CertBot::Data::Severity.
+                   get_mapping_for(@parameter_handler.repository.parameters[:severity])
+        severity = :medium if (severity.nil?)
+        severities = CertBot::Data::Severity.values[severity]
+        RssHandler.new(rss_feed, config_file, severities)
       end
   end
 

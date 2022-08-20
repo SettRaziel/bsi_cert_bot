@@ -1,7 +1,7 @@
 require "net/smtp"
 
 require_relative "configuration"
-require_relative "advisory_parser"
+require_relative "cert_bot/advisory_parser"
 
 module MailAgent
 
@@ -33,7 +33,7 @@ module MailAgent
   end
 
   private_class_method def self.retrieve_cves(wid)
-    cve_list = AdvisoryParser.retrieve_cves(wid)
+    cve_list = CertBot::AdvisoryParser.retrieve_cves(wid)
 
     cves = "CVEs:"
     counter = 0
@@ -52,7 +52,7 @@ module MailAgent
   end 
 
   private_class_method def self.retrieve_affected_products(wid)
-    product_list = AdvisoryParser.retrieve_affected_products(wid)
+    product_list = CertBot::AdvisoryParser.retrieve_affected_products(wid)
 
     affected_products = "Affected versions:\n"
     product_list.each { |product|

@@ -17,6 +17,7 @@ module CertBot
     def initialize(arguments)
       @parameter_handler = Parameter::ParameterHandler.new(arguments)
       CertBot::Data::Severity.initialize
+      CertBot::Data::UpdateStatus.initialize
     end
 
     private

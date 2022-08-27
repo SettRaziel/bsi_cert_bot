@@ -9,17 +9,19 @@ module MailAgent
     wid = item.link.split("=")[1]
     timestamp = item.pubDate.localtime
     config = Configuration.new(Pathname.new(config_file))
+    update_status = CertBot::AdvisoryParser.retrieve_update_status(wid)
     
     message = "From: CERT RSS <#{config.config_hash["from"]}>\n"
     message.concat("To: #{config.config_hash["to"]}\n")
     message.concat("Subject: CERT Report (#{wid}) - #{item.title.split(":")[0]}\n\n")
-    message.concat("Our CERT RSS Feed received a new security advisory:\n\n")
+    message.concat(create_introduction_string(update_status))
     message.concat("Title: #{item.title}\n")
     message.concat("Description: #{item.description}\n")
     message.concat("Link: #{item.link}\n")
     message.concat("Date: #{timestamp}\n")
-    message.concat("#{retrieve_cves(wid)}\n")
-    message.concat("#{retrieve_affected_products(wid)}")
+    message.concat("Status: #{update_status}\n")
+    message.concat("#{retrieve_cves(wid)}")
+    message.concat("\n#{retrieve_affected_products(wid)}")
     message.concat("Severity: #{item.category.content}\n")
     message.concat("WID: #{wid}\n\n")
     message.concat("Best wishes,\n")
@@ -30,6 +32,13 @@ module MailAgent
       smtp.send_message(message, config.config_hash["from"], config.config_hash["to"])
     end
     nil
+  end
+
+  private_class_method def self.create_introduction_string(update_status)
+    if (CertBot::Data::UpdateStatus.get_mapping_for(update_status) == :new)
+      return "Our CERT RSS Feed received a new security advisory:\n\n"
+    end
+    "Our CERT RSS Feed received an updated security advisory:\n\n"
   end
 
   private_class_method def self.retrieve_cves(wid)
@@ -60,6 +69,6 @@ module MailAgent
       affected_products.concat(product["name"]).concat("\n")
     }
     affected_products
-  end 
+  end
 
 end

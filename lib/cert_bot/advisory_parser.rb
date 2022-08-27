@@ -1,10 +1,14 @@
 require "net/http"
 require "json"
+require_relative "data"
 
 module CertBot
 
   module AdvisoryParser
 
+    # method to retrieve the json object of the advisory
+    # @param[String] wid the wid of the advisory
+    # @return [Hash] the json hash of the advisory
     def self.get_and_parse_advisory(wid)
       uuid_url = "https://wid.cert-bund.de/content/public/securityAdvisory/kurzinfo-uuid-by-name/#{wid}"
       wid_request = Net::HTTP.get(URI(uuid_url))
@@ -21,7 +25,15 @@ module CertBot
     def self.retrieve_affected_products(wid)
       cert_json = AdvisoryParser.get_and_parse_advisory(wid)
       filter_flat_map(cert_json, "productReferenceListe") {|cve_id_list| filter_flat_map(cve_id_list, "productReference") {|note| note["properties"] } }
-    end    
+    end
+
+    # method to retrieve the update status of the advisory
+    # @param[String] wid the wid of the advisory
+    # @return [String] the string of the property update type
+    def self.retrieve_update_status(wid)
+      cert_json = AdvisoryParser.get_and_parse_advisory(wid)
+      cert_json["properties"]["updatetype"]
+    end
 
     private_class_method def self.filter_flat_map(list, type) 
       list["children"].flat_map {|child| 

@@ -17,6 +17,7 @@ class CsvAccessor
     @data = Array.new
   end
 
+  # reads the csv file at the filename location and the given delimiter
   # @raise [IOError] if an error occurs while the file is read
   def read_csv
     begin
@@ -40,6 +41,7 @@ class CsvAccessor
 
   private
 
+  # @return [String] the target filename
   attr_reader :filename
   # @return [String] the delimiter character
   attr_reader :delimiter

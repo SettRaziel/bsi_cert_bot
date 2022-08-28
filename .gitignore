@@ -5,4 +5,7 @@ config/
 
 # add ignore to code coverage data
 coverage/
+
+# documentation folders and files
 doc/
+.yardoc/

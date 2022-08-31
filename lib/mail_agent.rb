@@ -3,8 +3,12 @@ require "net/smtp"
 require_relative "configuration"
 require_relative "cert_bot/advisory_parser"
 
+# Module to handle the mail creation and propagation of the message for a given rss item
 module MailAgent
 
+  # method to generate a mail for a given item of the rss feed
+  # @param [Item] item the rss item for a feed entry
+  # @param [String] config_file the file path to the configuration file
   def self.send_mail(item, config_file)
     wid = item.link.split("=")[1]
     timestamp = item.pubDate.localtime
@@ -34,6 +38,9 @@ module MailAgent
     nil
   end
 
+  # private method to create the mail introduction based on the update state of the advisory
+  # @param [Symbol] update_status the update status of the advisory
+  # @return [String] the output string for the mail text
   private_class_method def self.create_introduction_string(update_status)
     if (CertBot::Data::UpdateStatus.get_mapping_for(update_status) == :new)
       return "Our CERT RSS Feed received a new security advisory:\n\n"
@@ -41,6 +48,9 @@ module MailAgent
     "Our CERT RSS Feed received an updated security advisory:\n\n"
   end
 
+  # private method to retrieve the cves and put them into the output string to the mail
+  # @param [String] wid the id of the advisory
+  # @return [String] the output string for the mail text
   private_class_method def self.retrieve_cves(wid)
     cve_list = CertBot::AdvisoryParser.retrieve_cves(wid)
 
@@ -60,6 +70,9 @@ module MailAgent
     cves
   end 
 
+  # private method to retrieve the affected products and put them into the output string to the mail
+  # @param [String] wid the id of the advisory
+  # @return [String] the output string for the mail text
   private_class_method def self.retrieve_affected_products(wid)
     product_list = CertBot::AdvisoryParser.retrieve_affected_products(wid)
 

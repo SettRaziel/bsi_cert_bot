@@ -29,6 +29,8 @@ module CertBot
 
   end
 
+  # main entry point that requires the parameter repository to be filled
+  # the method reads the required parameter and generates the mail
   def self.parse_rss
       if (!parameter_handler.repository.parameters[:help] && 
           !parameter_handler.repository.parameters[:version])

@@ -2,6 +2,7 @@ require "rss"
 require "open-uri"
 require "pathname"
 
+require_relative "cert_bot/mail_agent"
 require_relative "cert_bot/csv_accessor"
 require_relative "cert_bot/data"
 
@@ -46,7 +47,7 @@ class RssHandler
           if (contains_severity?(severities, item.category.content))
             @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
             csv_accessor.append_row( [ item_wid, item_timestamp ])
-            MailAgent.send_mail(item, config_file)
+            CertBot::MailAgent.send_mail(item, config_file)
           end
         end
       }

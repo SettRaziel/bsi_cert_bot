@@ -1,4 +1,3 @@
-require_relative "mail_agent"
 require_relative "cert_bot/parameter"
 require_relative "rss_handler"
 require_relative "cert_bot/data"

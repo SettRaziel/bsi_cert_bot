@@ -1,0 +1,9 @@
+{
+  "address":"mail.example.com",
+  "port":"587",
+  "helo":"example.com",
+  "user":"mail@example.com",
+  "password":"test1234",
+  "from":"mail@example.com",
+  "to":"mail@example.com"
+}

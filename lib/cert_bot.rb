@@ -1,5 +1,5 @@
 require_relative "cert_bot/parameter"
-require_relative "rss_handler"
+require_relative "cert_bot/rss_handler"
 require_relative "cert_bot/data"
 
 # This module is the main entry point and will be called from the main forecast script
@@ -39,7 +39,7 @@ module CertBot
                    get_mapping_for(@parameter_handler.repository.parameters[:severity])
         severity = :medium if (severity.nil?)
         severities = CertBot::Data::Severity.values[severity]
-        RssHandler.new(rss_feed, config_file, severities)
+        CertBot::RssHandler.new(rss_feed, config_file, severities)
       end
   end
 

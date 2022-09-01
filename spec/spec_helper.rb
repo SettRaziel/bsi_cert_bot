@@ -20,6 +20,12 @@ begin
   SimpleCov.start
 rescue LoadError; end
 
+# Define required time zone for forecast timestamp
+ENV["TZ"] = "Europe/Berlin"
+
+PROJECT_ROOT = Pathname.new(__dir__).expand_path
+TEST_DATA = PROJECT_ROOT.join("files/").expand_path
+
 require "rspec"
 require_relative "../lib/cert_bot"
 

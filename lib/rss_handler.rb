@@ -2,7 +2,7 @@ require "rss"
 require "open-uri"
 require "pathname"
 
-require_relative "csv_accessor"
+require_relative "cert_bot/csv_accessor"
 require_relative "cert_bot/data"
 
 # This class handles the fetching, reading and parsing of the BSI rss feed
@@ -69,7 +69,7 @@ class RssHandler
   # @param [Strig] meta_path the file path to the meta data
   # @return [Array] an array containing the data within the file
   def init_csv_accessor(meta_path)
-    csv_accessor = CsvAccessor.new(meta_path, ";")
+    csv_accessor = CertBot::CsvAccessor.new(meta_path, ";")
     csv_accessor.read_csv if meta_path.file?
     csv_accessor
   end

@@ -11,7 +11,8 @@ describe CertBot::MailAgent do
         File.open(TEST_DATA.join("rss_sample").expand_path) do |rss|
           feed = RSS::Parser.parse(rss)
           allow(CertBot::MailAgent).to(receive(:call_smtp))
-          CertBot::MailAgent.send_mail(feed.items[3], TEST_DATA.join("config.json").expand_path)
+          message = CertBot::MailAgent.send_mail(feed.items[3], TEST_DATA.join("config.json").expand_path)
+          expect(message).to eq(File.read(TEST_DATA.join("mail_sample").expand_path))
         end
       end
     end

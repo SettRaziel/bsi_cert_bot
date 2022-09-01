@@ -11,6 +11,7 @@ module CertBot
     # method to generate a mail for a given item of the rss feed
     # @param [Item] item the rss item for a feed entry
     # @param [String] config_file the file path to the configuration file
+    # @return [String] them mail message
     def self.send_mail(item, config_file)
       wid = item.link.split("=")[1]
       timestamp = item.pubDate.localtime
@@ -34,7 +35,7 @@ module CertBot
       message.concat("Your CERT Bot.")
 
       call_smtp(message, config)
-      nil
+      message
     end
 
     # private method to create the mail introduction based on the update state of the advisory

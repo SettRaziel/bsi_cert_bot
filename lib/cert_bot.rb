@@ -1,6 +1,7 @@
 require_relative "cert_bot/parameter"
 require_relative "cert_bot/rss_handler"
 require_relative "cert_bot/data"
+require_relative "cert_bot/help/help_output"
 
 # This module is the main entry point and will be called from the main forecast script
 module CertBot

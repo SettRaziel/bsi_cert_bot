@@ -4,6 +4,19 @@ require_relative "../../lib/cert_bot/rss_handler"
 
 describe CertBot do
 
+  describe "#print_error" do
+    context "given the module" do
+      it "print the error text for the uninitialized arguments" do
+        expect {
+          arguments = ["-s", "high", "--file", TEST_DATA.join("config.json").to_s]
+          CertBot.initialize(arguments)
+          CertBot.print_help
+        }.to output("Error: Module not initialized. Run CertBot.new(ARGV)".red + "\n" + \
+                    "For help type: ruby <script> --help".green + "\n").to_stdout
+      end
+    end
+  end
+
   describe "#parse_rss" do
     context "given runtime parameters for the script" do
       it "start the script and create messages without an error" do
@@ -33,13 +46,16 @@ describe CertBot do
     end
   end
 
-  describe "#print_error" do
+  describe "#print_help" do
     context "given the module" do
-      it "print the error text for the uninitialized arguments" do
+      it "print the help text for the given argument" do
         expect {
+          arguments = ["-s", "--help"]
+          CertBot.initialize(arguments)
           CertBot.print_help
-        }.to output("Error: Module not initialized. Run CertBot.new(ARGV)".red + "\n" + \
-                    "For help type: ruby <script> --help".green + "\n").to_stdout
+        }.to output("CERT bot help:".light_yellow + "\n" + \
+                    " -s, --severity  ".light_blue + "argument:".red + " <severity>".yellow  + \
+                    "; specifies the severity threshold when a severity should sent an e-mail\n").to_stdout
       end
     end
   end

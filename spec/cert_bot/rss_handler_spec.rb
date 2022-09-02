@@ -1,5 +1,4 @@
 require "spec_helper"
-require "rss"
 
 require_relative "../../lib/cert_bot/rss_handler"
 

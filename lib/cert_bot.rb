@@ -46,9 +46,9 @@ module CertBot
   # call to print the help text
   def self.print_help
     if (@parameter_handler != nil && @parameter_handler.repository.parameters[:help] != nil)
-      WrfForecast::HelpOutput.print_help_for(@parameter_handler.repository.parameters[:help])
+      CertBot::HelpOutput.print_help_for(@parameter_handler.repository.parameters[:help])
     else
-      print_error("Error: Module not initialized. Run WrfForecast.new(ARGV)")
+      print_error("Error: Module not initialized. Run CertBot.new(ARGV)")
     end
     nil
   end

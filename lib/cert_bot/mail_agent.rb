@@ -1,6 +1,6 @@
 require "net/smtp"
 
-require_relative "../configuration"
+require_relative "configuration"
 require_relative "advisory_parser"
 
 module CertBot
@@ -15,7 +15,7 @@ module CertBot
     def self.send_mail(item, config_file)
       wid = item.link.split("=")[1]
       timestamp = item.pubDate.localtime
-      config = Configuration.new(Pathname.new(config_file))
+      config = CertBot::Configuration.new(Pathname.new(config_file))
       update_status = CertBot::AdvisoryParser.retrieve_update_status(wid)
       
       message = "From: CERT RSS <#{config.config_hash["from"]}>\n"

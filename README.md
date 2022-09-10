@@ -12,10 +12,14 @@ reports to be send to the given mail address.
 ## Usage
 ```
 script usage: ruby <script> [parameters] -f <filename>
-Parameter:
- -f, --file      argument: <config_file>; file path to the json file with the required configuration parameter
- -s, --severity  argument: <severity>; optional string to define the severity from which advirsories should be send {"low", "medium", "high", "critical"}
-```
+help usage :              ruby <script> (-h | --help)
+help usage for parameter: ruby <script> <parameter> (-h | --help)
+CERT bot help:
+ -h, --help      show help text
+ -v, --version   prints the current version of the project
+ -f, --file      argument: <filename>; parameter that indicates a filepath to the config json file
+ -s, --severity  argument: <severity>; specifies the severity threshold when a severity should sent an e-mail
+ ```
 
 ## Configuration
 Specify JSON parameters for usage in config.json
@@ -36,19 +40,16 @@ and set the path for the configuration class to get your values set.
 ```
 Our CERT RSS Feed received a new security advisory:
 
-Title: Red Hat OpenShift Logging Subsystem: Mehrere Schwachstellen
-Description: Ein entfernter, anonymer Angreifer kann mehrere Schwachstellen in Red Hat OpenShift Logging Subsystem ausnutzen, um Sicherheitsmechanismen zu umgehen und um einen Denial of Service Zustand herbeizuführen.
-Link: https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-0069
-Date: Thu, 18 Aug 2022 14:06:14 +0200
-CVEs: CVE-2022-0759 CVE-2022-21698
+Title: Linux Kernel: Schwachstelle ermöglicht nicht spezifizierten Angriff
+Description: Ein Angreifer kann eine Schwachstelle im Linux Kernel ausnutzen, um einen nicht näher spezifizierten Angriff durchzuführen.
+Link: https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1360
+Date: Fri, 09 Sep 2022 10:11:37 +0200
+Status: New
+CVEs: CVE-2022-40307
 Affected versions:
-      Red Hat Enterprise Linux
-      SUSE Linux
-      Oracle Linux
-      Avaya Aura Communication Manager
-      Red Hat OpenShift Logging Subsystem 5
+      Open Source Linux Kernel <= 5.19.8
 Severity: hoch
-WID: WID-SEC-2022-0069
+WID: WID-SEC-2022-1360
 
 Best wishes,
 Your CERT Bot.

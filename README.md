@@ -1,6 +1,8 @@
 # BSI CERT RSS Bot
-Simple Mailbot that checks the BSI CERT RSS feed and parses CERT 
-reports to be send to the given mail address.
+Simple Mailbot that checks the BSI (Bundesamt für Sicherheit in der Informationstechnik; 
+govermental institution for information security in germany) 
+CERT [RSS feed](https://wid.cert-bund.de/content/public/securityAdvisory/rss) and 
+parses CERT reports to be send to the given mail address.
 
 Current version: v0.1.0
 
@@ -22,6 +24,19 @@ CERT bot help:
  -f, --file      argument: <filename>; parameter that indicates a filepath to the config json file
  -s, --severity  argument: <severity>; specifies the severity threshold when a severity should sent an e-mail
  ```
+
+### Severity Ratings
+The BSI gives a severity for the published advisories with different levels and input for the 
+[severity rating](https://wid.cert-bund.de/portal/wid/fragenundantworten). The entries in the bracket
+are the possible values for the severity parameter:
+* low: ["low" "niedrig"]
+* medium: ["medium", "mittel"]
+* high: ["high", "hoch"]
+* critical: ["critical", "kritisch"]
+So an example call for sending only messages for high or critical advisories can look as:
+```
+ruby cert_bot.rb -s high -f <path_to_config.json>
+```
 
 ## Configuration
 Specify JSON parameters for usage in config.json

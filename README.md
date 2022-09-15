@@ -33,6 +33,7 @@ are the possible values for the severity parameter:
 * medium: ["medium", "mittel"]
 * high: ["high", "hoch"]
 * critical: ["critical", "kritisch"]
+
 So an example call for sending only messages for high or critical advisories can look as:
 ```
 ruby cert_bot.rb -s high -f <path_to_config.json>

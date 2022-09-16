@@ -9,6 +9,8 @@ module CertBot
 
     # method to specify and add the help entries with help text only
     def self.add_single_help_entries
+      add_simple_text(:updated, " -u, --updated   ", 
+            "also sends an e-mail for updated advisories")
       nil
     end
 

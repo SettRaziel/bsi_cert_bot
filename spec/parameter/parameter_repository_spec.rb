@@ -34,6 +34,26 @@ describe CertBot::Parameter::ParameterRepository do
   end
 
   describe ".new" do
+    context "given the updated flag" do
+      it "create the repository with the correct flags" do
+        arguments = ["-u", "--file", "filename"]
+        parameter_repository = CertBot::Parameter::ParameterRepository.new(arguments)
+        expect(parameter_repository.parameters[:updated]).to eq(true)
+      end
+    end
+  end
+
+  describe ".new" do
+    context "given the updated flag" do
+      it "create the repository with the correct flags" do
+        arguments = ["--updated", "--file", "filename"]
+        parameter_repository = CertBot::Parameter::ParameterRepository.new(arguments)
+        expect(parameter_repository.parameters[:updated]).to eq(true)
+      end
+    end
+  end
+
+  describe ".new" do
     context "given no arguments for the initialization" do
       it "raise an argument error" do
         arguments = [ ]

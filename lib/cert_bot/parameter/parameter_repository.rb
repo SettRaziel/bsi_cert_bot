@@ -17,6 +17,7 @@ module CertBot
         case arg
           when *@mapping[:json] then @parameters[:json] = true
           when *@mapping[:severity] then create_argument_entry(:severity)
+          when *@mapping[:updated] then @parameters[:updated] = true
         else
           raise_invalid_parameter(arg)
         end
@@ -27,6 +28,7 @@ module CertBot
       def define_mapping
         @mapping[:json] = ["-j", "--json"]
         @mapping[:severity] = ["-s", "--severity"]
+        @mapping[:updated] = ["-u", "--updated"]
       end
 
     end

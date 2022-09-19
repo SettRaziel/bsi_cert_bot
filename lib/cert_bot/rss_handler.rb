@@ -43,14 +43,11 @@ module CertBot
         feed = RSS::Parser.parse(rss)
         feed.items.each { |item|
           item_wid = item.link.split("=")[1]
-          item_timestamp = item.pubDate.localtime
           @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
-          if (!contains_values?(item_wid, item_timestamp, csv_accessor.data))
-            if (contains_severity?(severities, item.category.content))
-              @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
-              csv_accessor.append_row( [ item_wid, item_timestamp ])
-              CertBot::MailAgent.send_mail(item, config_file)
-            end
+          if (contraints_fulfilled(item, csv_accessor.data, severities))
+            @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
+            csv_accessor.append_row([ item_wid, item.pubDate.localtime ])
+            CertBot::MailAgent.send_mail(item, config_file)
           end
         }
       end
@@ -83,6 +80,18 @@ module CertBot
     # @return [Boolean] true, if the given severity is contained within the categories
     def contains_severity?(categories, severity_string)
       categories.include?(CertBot::Data::Severity.get_mapping_for(severity_string))
+    end
+
+    # method to determine if all constraints for sending a mail are fulfilled
+    # @param [RSS:Item] item the current rss item
+    # @param [Array] csv_data the list of items that already have been processed in previous script calls
+    # @param [Array] severities the list of severities that needs to be sent
+    # @param [Bool] the boolean that shows if the contraints are fulfilled of not
+    def contraints_fulfilled(item, csv_data, severities)
+      item_wid = item.link.split("=")[1]
+      return false if (contains_values?(item_wid, item.pubDate.localtime, csv_data))
+      return false if (!contains_severity?(severities, item.category.content))
+      true
     end
 
   end

@@ -14,32 +14,20 @@ module CertBot
     # initialization
     # @param [String] rss_feed the url to the rss feed
     # @param [String] config_file the file path to the configuration file
-    # @param [Array] severities the list of severities that should be parsed from the feed
-    def initialize(rss_feed, config_file, severities)
+    def initialize(rss_feed, config_file)
       @config_path = Pathname.new(config_file).dirname.expand_path
       @debug_log = File.open(@config_path.join("debug.log"), mode="a")
-      @debug_log.puts("Starting rss parsing at #{Time.now}.")
-      read_feed(rss_feed, config_file, severities)
-      @debug_log.puts("Finishing rss parsing at #{Time.now}.")
-      @debug_log.puts
-      @debug_log.close
+      @rss_feed = rss_feed
+      @config_file = config_file
     end
 
-    private
-
-    # @return [Pathname] the pathname to the configuration file
-    attr_accessor :config_path
-    # @return [File] the file object to where debug output is written
-    attr_accessor :debug_log
-
     # method to parse the feed and generate mails for the required items
-    # @param [String] rss_feed the url to the rss feed
-    # @param [String] config_file the file path to the configuration file
     # @param [Array] severities the list of severities that should be parsed from the feed
-    def read_feed(rss_feed, config_file, severities)
+    def read_feed(severities)
+      @debug_log.puts("Starting rss parsing at #{Time.now}.")
       csv_accessor = init_csv_accessor(Pathname.new(@config_path).join("meta_info").expand_path)
 
-      URI.open(rss_feed) do |rss|
+      URI.open(@rss_feed) do |rss|
         feed = RSS::Parser.parse(rss)
         feed.items.each { |item|
           item_wid = item.link.split("=")[1]
@@ -51,8 +39,22 @@ module CertBot
           end
         }
       end
+      @debug_log.puts("Finishing rss parsing at #{Time.now}.")
+      @debug_log.puts
+      @debug_log.close
       nil
     end
+
+    private
+
+    # @return [Pathname] the pathname to the configuration file
+    attr_accessor :config_path
+    # @return [File] the file object to where debug output is written
+    attr_accessor :debug_log
+    # @return [String] the URI to the rss feed
+    attr_accessor :rss_feed
+    # @return [String] the string path to the config.json
+    attr_accessor :config_file
 
     # method to check if a advisory already has been mailed
     # @param [String] item_wid the id of the advisory

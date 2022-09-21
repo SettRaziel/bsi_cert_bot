@@ -40,7 +40,8 @@ module CertBot
                    get_mapping_for(@parameter_handler.repository.parameters[:severity])
         severity = :medium if (severity.nil?)
         severities = CertBot::Data::Severity.values[severity]
-        CertBot::RssHandler.new(rss_feed, config_file, severities)
+        rss_handler = CertBot::RssHandler.new(rss_feed, config_file)
+        rss_handler.read_feed(severities)
       end
   end
 

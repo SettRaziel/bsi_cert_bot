@@ -30,6 +30,7 @@ module CertBot
       end
 
       # module method to retrieve the severity symbol to the given severity string
+      # @param [String] update_status the string with the update status
       # @return [Symbol] returns the severity symbol or nil if the string could not be found
       def self.get_mapping_for(update_status)
         initialize if (@string_mapping.eql?(nil))

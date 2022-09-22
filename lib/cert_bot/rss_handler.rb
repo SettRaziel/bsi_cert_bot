@@ -5,6 +5,8 @@ require "pathname"
 require_relative "mail_agent"
 require_relative "csv_accessor"
 require_relative "data"
+require_relative "advisory_parser"
+require_relative "data/update_status"
 
 module CertBot
 
@@ -23,7 +25,8 @@ module CertBot
 
     # method to parse the feed and generate mails for the required items
     # @param [Array] severities the list of severities that should be parsed from the feed
-    def read_feed(severities)
+    # @param [Bool] is_updated true if the parameter was set, nil otherwise
+    def read_feed(severities, is_updated)
       @debug_log.puts("Starting rss parsing at #{Time.now}.")
       csv_accessor = init_csv_accessor(Pathname.new(@config_path).join("meta_info").expand_path)
 
@@ -32,7 +35,7 @@ module CertBot
         feed.items.each { |item|
           item_wid = item.link.split("=")[1]
           @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
-          if (contraints_fulfilled(item, csv_accessor.data, severities))
+          if (contraints_fulfilled(item, csv_accessor.data, severities, is_updated))
             @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
             csv_accessor.append_row([ item_wid, item.pubDate.localtime ])
             CertBot::MailAgent.send_mail(item, config_file)
@@ -88,11 +91,16 @@ module CertBot
     # @param [RSS:Item] item the current rss item
     # @param [Array] csv_data the list of items that already have been processed in previous script calls
     # @param [Array] severities the list of severities that needs to be sent
+    # @param [Bool] is_updated true if the parameter was set, nil otherwise
     # @param [Bool] the boolean that shows if the contraints are fulfilled of not
-    def contraints_fulfilled(item, csv_data, severities)
+    def contraints_fulfilled(item, csv_data, severities, is_updated)
       item_wid = item.link.split("=")[1]
       return false if (contains_values?(item_wid, item.pubDate.localtime, csv_data))
       return false if (!contains_severity?(severities, item.category.content))
+      if (is_updated == nil)
+        update_status = CertBot::AdvisoryParser.retrieve_update_status(item_wid)
+        return false if (CertBot::Data::UpdateStatus.get_mapping_for(update_status) != :new)
+      end
       true
     end
 

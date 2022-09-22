@@ -41,7 +41,7 @@ module CertBot
         severity = :medium if (severity.nil?)
         severities = CertBot::Data::Severity.values[severity]
         rss_handler = CertBot::RssHandler.new(rss_feed, config_file)
-        rss_handler.read_feed(severities)
+        rss_handler.read_feed(severities, @parameter_handler.repository.parameters[:updated])
       end
   end
 

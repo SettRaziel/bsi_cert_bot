@@ -72,7 +72,7 @@ module CertBot
 
     # method to initialize the csv and read the data from the meta data filepath
     # @param [Strig] meta_path the file path to the meta data
-    # @return [Array] an array containing the data within the file
+    # @return [CertBot::CsvAccessor] the CsvAccessor object that wrapps the read data
     def init_csv_accessor(meta_path)
       csv_accessor = CertBot::CsvAccessor.new(meta_path, ";")
       csv_accessor.read_csv if meta_path.file?

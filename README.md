@@ -22,6 +22,7 @@ CERT bot help:
  -h, --help      show help text
  -v, --version   prints the current version of the project
  -f, --file      argument: <filename>; parameter that indicates a filepath to the config json file
+ -u, --updated   also sends an e-mail for updated advisories
  -s, --severity  argument: <severity>; specifies the severity threshold when a severity should sent an e-mail
  ```
 
@@ -38,6 +39,16 @@ So an example call for sending only messages for high or critical advisories can
 ```
 ruby cert_bot.rb -s high -f <path_to_config.json>
 ```
+
+### Updated Advisories
+Published advisories change over time. They can get addition affected products, vulnerabilities or information links. 
+In that case an advisory gets updated and republished in the rss feed. That leeds to duplicated notifications for advisories.
+For that case the update status is noted within the mail text to mark if this is a new or updated advisory.
+The BSI differs between three states: new, update, silent-update. In the default behavior the script will only send notifications
+for advisories with the status new. If you consume these notifications to review the advisories for your own assets getting
+updated advisories lead to duplicated notifications or tickets that need to be reviewed and connected to already existing ones.
+If you still want to recieve notifications for updated advisories you can add the flag `-u` or `--updated` to get mails for
+updated advisories.
 
 ## Configuration
 Specify JSON parameters for usage in config.json

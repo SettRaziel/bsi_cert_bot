@@ -4,6 +4,18 @@ require_relative "../../lib/cert_bot/help/help_output"
 describe CertBot::HelpOutput do
 
   describe "#print_help_for" do
+    context "given a simple help entry" do
+      it "print the help text for :updated" do
+        expect { 
+          CertBot::HelpOutput.print_help_for(:updated) 
+        }.to output("CERT bot help:".light_yellow + "\n" + \
+                    " -u, --updated   ".light_blue +  \
+                    "also sends an e-mail for updated advisories\n").to_stdout
+      end
+    end
+  end
+
+  describe "#print_help_for" do
     context "given a one element help entry" do
       it "print the help text for :severity" do
         expect { 
@@ -40,6 +52,8 @@ describe CertBot::HelpOutput do
                     " -v, --version   ".light_blue + "prints the current version of the project\n" + \
                     " -f, --file      ".light_blue + "argument:".red + " <filename>".yellow + \
                     "; parameter that indicates a filepath to the config json file\n" + \
+                    " -u, --updated   ".light_blue +  \
+                    "also sends an e-mail for updated advisories\n" + \
                     " -s, --severity  ".light_blue + "argument:".red + " <severity>".yellow  + \
                     "; specifies the severity threshold when a severity should sent an e-mail\n").to_stdout
       end

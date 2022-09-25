@@ -5,6 +5,8 @@ require "pathname"
 require_relative "mail_agent"
 require_relative "csv_accessor"
 require_relative "data"
+require_relative "advisory_parser"
+require_relative "data/update_status"
 
 module CertBot
 
@@ -14,15 +16,36 @@ module CertBot
     # initialization
     # @param [String] rss_feed the url to the rss feed
     # @param [String] config_file the file path to the configuration file
-    # @param [Array] severities the list of severities that should be parsed from the feed
-    def initialize(rss_feed, config_file, severities)
+    def initialize(rss_feed, config_file)
       @config_path = Pathname.new(config_file).dirname.expand_path
       @debug_log = File.open(@config_path.join("debug.log"), mode="a")
+      @rss_feed = rss_feed
+      @config_file = config_file
+    end
+
+    # method to parse the feed and generate mails for the required items
+    # @param [Array] severities the list of severities that should be parsed from the feed
+    # @param [Bool] is_updated true if the parameter was set, nil otherwise
+    def read_feed(severities, is_updated)
       @debug_log.puts("Starting rss parsing at #{Time.now}.")
-      read_feed(rss_feed, config_file, severities)
+      csv_accessor = init_csv_accessor(Pathname.new(@config_path).join("meta_info").expand_path)
+
+      URI.open(@rss_feed) do |rss|
+        feed = RSS::Parser.parse(rss)
+        feed.items.each { |item|
+          item_wid = item.link.split("=")[1]
+          @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
+          if (contraints_fulfilled(item, csv_accessor.data, severities, is_updated))
+            @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
+            csv_accessor.append_row([ item_wid, item.pubDate.localtime ])
+            CertBot::MailAgent.send_mail(item, config_file)
+          end
+        }
+      end
       @debug_log.puts("Finishing rss parsing at #{Time.now}.")
       @debug_log.puts
       @debug_log.close
+      nil
     end
 
     private
@@ -31,31 +54,10 @@ module CertBot
     attr_accessor :config_path
     # @return [File] the file object to where debug output is written
     attr_accessor :debug_log
-
-    # method to parse the feed and generate mails for the required items
-    # @param [String] rss_feed the url to the rss feed
-    # @param [String] config_file the file path to the configuration file
-    # @param [Array] severities the list of severities that should be parsed from the feed
-    def read_feed(rss_feed, config_file, severities)
-      csv_accessor = init_csv_accessor(Pathname.new(@config_path).join("meta_info").expand_path)
-
-      URI.open(rss_feed) do |rss|
-        feed = RSS::Parser.parse(rss)
-        feed.items.each { |item|
-          item_wid = item.link.split("=")[1]
-          item_timestamp = item.pubDate.localtime
-          @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
-          if (!contains_values?(item_wid, item_timestamp, csv_accessor.data))
-            if (contains_severity?(severities, item.category.content))
-              @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
-              csv_accessor.append_row( [ item_wid, item_timestamp ])
-              CertBot::MailAgent.send_mail(item, config_file)
-            end
-          end
-        }
-      end
-      nil
-    end
+    # @return [String] the URI to the rss feed
+    attr_accessor :rss_feed
+    # @return [String] the string path to the config.json
+    attr_accessor :config_file
 
     # method to check if a advisory already has been mailed
     # @param [String] item_wid the id of the advisory
@@ -70,7 +72,7 @@ module CertBot
 
     # method to initialize the csv and read the data from the meta data filepath
     # @param [Strig] meta_path the file path to the meta data
-    # @return [Array] an array containing the data within the file
+    # @return [CertBot::CsvAccessor] the CsvAccessor object that wrapps the read data
     def init_csv_accessor(meta_path)
       csv_accessor = CertBot::CsvAccessor.new(meta_path, ";")
       csv_accessor.read_csv if meta_path.file?
@@ -83,6 +85,23 @@ module CertBot
     # @return [Boolean] true, if the given severity is contained within the categories
     def contains_severity?(categories, severity_string)
       categories.include?(CertBot::Data::Severity.get_mapping_for(severity_string))
+    end
+
+    # method to determine if all constraints for sending a mail are fulfilled
+    # @param [RSS:Item] item the current rss item
+    # @param [Array] csv_data the list of items that already have been processed in previous script calls
+    # @param [Array] severities the list of severities that needs to be sent
+    # @param [Bool] is_updated true if the parameter was set, nil otherwise
+    # @param [Bool] the boolean that shows if the contraints are fulfilled of not
+    def contraints_fulfilled(item, csv_data, severities, is_updated)
+      item_wid = item.link.split("=")[1]
+      return false if (contains_values?(item_wid, item.pubDate.localtime, csv_data))
+      return false if (!contains_severity?(severities, item.category.content))
+      if (is_updated == nil)
+        update_status = CertBot::AdvisoryParser.retrieve_update_status(item_wid)
+        return false if (CertBot::Data::UpdateStatus.get_mapping_for(update_status) != :new)
+      end
+      true
     end
 
   end

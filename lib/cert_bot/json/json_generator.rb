@@ -4,8 +4,12 @@ require_relative "../advisory_parser"
 
 module CertBot
 
+  # Simple module to generate a JSON object with the relvevant information of an advisory item
   module JsonGenerator
 
+    # Method to generate a JSON Object for the advisory item and write it to the config path
+    # @param [RSS:Item] item an advisory item from the rss feed
+    # @param [Pathname] config_path the path where the json object should be stored
     def self.generate_json(item, config_path)
       wid = item.link.split("=")[1]
       timestamp = item.pubDate.localtime
@@ -33,6 +37,7 @@ module CertBot
         file.write(output_string)
         file.close
       end
+      nil
     end
 
   end

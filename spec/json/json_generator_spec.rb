@@ -11,11 +11,11 @@ describe CertBot::JsonGenerator do
           feed = RSS::Parser.parse(rss)
           CertBot::JsonGenerator.generate_json(feed.items[3], TEST_DATA.expand_path)
         end
-       expect(FileUtils.compare_file(File.join(TEST_DATA.expand_path,"WID-SEC-2022-1251_2022_09_01_13.json"), 
-                                     File.join(TEST_DATA.expand_path,"expected_output.json"))).to be_truthy
+        expect(FileUtils.compare_file(File.join(TEST_DATA.expand_path,"WID-SEC-2022-1251_2022_09_01_13.json"), 
+                                      File.join(TEST_DATA.expand_path,"expected_output.json"))).to be_truthy
 
         # clean up data from the test and catch errors since they should not let the test fail
-       File.delete(File.join(TEST_DATA.expand_path,"WID-SEC-2022-1251_2022_09_01_13.json"))
+        File.delete(File.join(TEST_DATA.expand_path,"WID-SEC-2022-1251_2022_09_01_13.json"))
       end
     end
   end

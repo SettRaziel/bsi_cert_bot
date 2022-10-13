@@ -12,7 +12,7 @@ module CertBot
       add_simple_text(:updated, " -u, --updated   ", 
             "also sends an e-mail for updated advisories")
       add_simple_text(:json, " -j, --json      ", 
-            "writes advisories as json objects into a file instead of senden an e-mail")
+            "writes advisories as json objects into a file instead of sending an e-mail")
       nil
     end
 

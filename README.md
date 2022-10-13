@@ -23,6 +23,7 @@ CERT bot help:
  -v, --version   prints the current version of the project
  -f, --file      argument: <filename>; parameter that indicates a filepath to the config json file
  -u, --updated   also sends an e-mail for updated advisories
+ -j, --json      writes advisories as json objects into a file instead of sending an e-mail
  -s, --severity  argument: <severity>; specifies the severity threshold when a severity should sent an e-mail
  ```
 

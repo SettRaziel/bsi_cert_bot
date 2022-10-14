@@ -40,9 +40,6 @@ describe CertBot do
         CertBot.initialize(arguments)
         CertBot.parse_rss
 
-        # Count json files: 18 advisories and 2 config files
-        expect(Dir[File.join(TEST_DATA, 'WID-SEC-*.json')].count { |file| File.file?(file) }).to eq(18)
-
         # clean up data from the test and catch errors since they should not let the test fail
         File.delete(TEST_DATA.join("debug.log"))
         File.delete(TEST_DATA.join("meta_info"))

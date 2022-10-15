@@ -23,8 +23,10 @@ module CertBot
     private
 
     # method the check if the given parameter has been set
+    # @param [Symbol] symbol the symbol representation of the parameter to check
+    # @return [boolean] the boolean information if the symbol is in the repository
     def contains_parameter?(symbol)
-      @parameter_handler.repository.parameters[symbol] != nil
+      @parameter_handler != nil && @parameter_handler.repository.parameters[symbol] != nil
     end
 
   end
@@ -32,8 +34,7 @@ module CertBot
   # main entry point that requires the parameter repository to be filled
   # the method reads the required parameter and generates the mail
   def self.parse_rss
-      if (!parameter_handler.repository.parameters[:help] && 
-          !parameter_handler.repository.parameters[:version])
+      if (!contains_parameter?(:help) && !contains_parameter?(:version))
         rss_feed = "https://wid.cert-bund.de/content/public/securityAdvisory/rss"
         config_file = @parameter_handler.repository.parameters[:file]
         severity = CertBot::Data::Severity.
@@ -47,7 +48,7 @@ module CertBot
 
   # call to print the help text
   def self.print_help
-    if (@parameter_handler != nil && @parameter_handler.repository.parameters[:help] != nil)
+    if (contains_parameter?(:help))
       CertBot::HelpOutput.print_help_for(@parameter_handler.repository.parameters[:help])
     else
       print_error("Error: Module not initialized. Run CertBot.new(ARGV)")
@@ -68,10 +69,6 @@ module CertBot
     puts "#{message}".red
     puts "For help type: ruby <script> --help".green
     nil
-  end
-
-  private_class_method def self.determine_json_output
-   ## todo
   end
 
 end

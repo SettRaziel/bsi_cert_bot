@@ -33,6 +33,21 @@ describe CertBot do
     end
   end
 
+  describe "#parse_rss" do
+    context "given runtime parameters for the script with json parameter" do
+      it "start the script and create messages without an error" do
+        arguments = ["-s", "high", "--json", "--file", TEST_DATA.join("config.json").to_s]
+        CertBot.initialize(arguments)
+        CertBot.parse_rss
+
+        # clean up data from the test and catch errors since they should not let the test fail
+        File.delete(TEST_DATA.join("debug.log"))
+        File.delete(TEST_DATA.join("meta_info"))
+        Dir[File.join(TEST_DATA, 'WID-SEC-*.json')].each { |file| File.delete(file) }
+      end
+    end
+  end
+
   describe "#print_version" do
     context "given the module" do
       it "print the version text" do

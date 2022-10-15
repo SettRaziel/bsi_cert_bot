@@ -1,0 +1,314 @@
+{
+  "wid": "WID-SEC-2022-1251",
+  "title": "Xerox FreeFlow Print Server: Mehrere Schwachstellen",
+  "description": "Ein entfernter, anonymer Angreifer kann mehrere Schwachstellen in Xerox FreeFlow Print Server ausnutzen, um die Vertraulichkeit, Verfügbarkeit und Integrität des Systems zu gefährden.",
+  "hash": "https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1251",
+  "release": "Thu, 01 Sep 2022 13:11:37 +0200",
+  "status": "New",
+  "cves": [
+    {
+      "cveId": "CVE-2020-0689"
+    },
+    {
+      "cveId": "CVE-2022-1529"
+    },
+    {
+      "cveId": "CVE-2022-1802"
+    },
+    {
+      "cveId": "CVE-2022-1919"
+    },
+    {
+      "cveId": "CVE-2022-21911"
+    },
+    {
+      "cveId": "CVE-2022-2200"
+    },
+    {
+      "cveId": "CVE-2022-26832"
+    },
+    {
+      "cveId": "CVE-2022-29909"
+    },
+    {
+      "cveId": "CVE-2022-29910"
+    },
+    {
+      "cveId": "CVE-2022-29911"
+    },
+    {
+      "cveId": "CVE-2022-29912"
+    },
+    {
+      "cveId": "CVE-2022-29914"
+    },
+    {
+      "cveId": "CVE-2022-29915"
+    },
+    {
+      "cveId": "CVE-2022-29916"
+    },
+    {
+      "cveId": "CVE-2022-29917"
+    },
+    {
+      "cveId": "CVE-2022-29918"
+    },
+    {
+      "cveId": "CVE-2022-30130"
+    },
+    {
+      "cveId": "CVE-2022-30133"
+    },
+    {
+      "cveId": "CVE-2022-30144"
+    },
+    {
+      "cveId": "CVE-2022-30194"
+    },
+    {
+      "cveId": "CVE-2022-31736"
+    },
+    {
+      "cveId": "CVE-2022-31737"
+    },
+    {
+      "cveId": "CVE-2022-31738"
+    },
+    {
+      "cveId": "CVE-2022-31739"
+    },
+    {
+      "cveId": "CVE-2022-31740"
+    },
+    {
+      "cveId": "CVE-2022-31741"
+    },
+    {
+      "cveId": "CVE-2022-31742"
+    },
+    {
+      "cveId": "CVE-2022-31743"
+    },
+    {
+      "cveId": "CVE-2022-31744"
+    },
+    {
+      "cveId": "CVE-2022-31745"
+    },
+    {
+      "cveId": "CVE-2022-31747"
+    },
+    {
+      "cveId": "CVE-2022-31748"
+    },
+    {
+      "cveId": "CVE-2022-33670"
+    },
+    {
+      "cveId": "CVE-2022-34301"
+    },
+    {
+      "cveId": "CVE-2022-34302"
+    },
+    {
+      "cveId": "CVE-2022-34303"
+    },
+    {
+      "cveId": "CVE-2022-34468"
+    },
+    {
+      "cveId": "CVE-2022-34469"
+    },
+    {
+      "cveId": "CVE-2022-34470"
+    },
+    {
+      "cveId": "CVE-2022-34471"
+    },
+    {
+      "cveId": "CVE-2022-34472"
+    },
+    {
+      "cveId": "CVE-2022-34473"
+    },
+    {
+      "cveId": "CVE-2022-34474"
+    },
+    {
+      "cveId": "CVE-2022-34475"
+    },
+    {
+      "cveId": "CVE-2022-34476"
+    },
+    {
+      "cveId": "CVE-2022-34477"
+    },
+    {
+      "cveId": "CVE-2022-34478"
+    },
+    {
+      "cveId": "CVE-2022-34479"
+    },
+    {
+      "cveId": "CVE-2022-34480"
+    },
+    {
+      "cveId": "CVE-2022-34481"
+    },
+    {
+      "cveId": "CVE-2022-34482"
+    },
+    {
+      "cveId": "CVE-2022-34483"
+    },
+    {
+      "cveId": "CVE-2022-34484"
+    },
+    {
+      "cveId": "CVE-2022-34485"
+    },
+    {
+      "cveId": "CVE-2022-34690"
+    },
+    {
+      "cveId": "CVE-2022-34691"
+    },
+    {
+      "cveId": "CVE-2022-34696"
+    },
+    {
+      "cveId": "CVE-2022-34699"
+    },
+    {
+      "cveId": "CVE-2022-34701"
+    },
+    {
+      "cveId": "CVE-2022-34702"
+    },
+    {
+      "cveId": "CVE-2022-34703"
+    },
+    {
+      "cveId": "CVE-2022-34704"
+    },
+    {
+      "cveId": "CVE-2022-34706"
+    },
+    {
+      "cveId": "CVE-2022-34707"
+    },
+    {
+      "cveId": "CVE-2022-34708"
+    },
+    {
+      "cveId": "CVE-2022-34709"
+    },
+    {
+      "cveId": "CVE-2022-34710"
+    },
+    {
+      "cveId": "CVE-2022-34711"
+    },
+    {
+      "cveId": "CVE-2022-34713"
+    },
+    {
+      "cveId": "CVE-2022-34714"
+    },
+    {
+      "cveId": "CVE-2022-35743"
+    },
+    {
+      "cveId": "CVE-2022-35744"
+    },
+    {
+      "cveId": "CVE-2022-35745"
+    },
+    {
+      "cveId": "CVE-2022-35746"
+    },
+    {
+      "cveId": "CVE-2022-35747"
+    },
+    {
+      "cveId": "CVE-2022-35749"
+    },
+    {
+      "cveId": "CVE-2022-35750"
+    },
+    {
+      "cveId": "CVE-2022-35751"
+    },
+    {
+      "cveId": "CVE-2022-35752"
+    },
+    {
+      "cveId": "CVE-2022-35753"
+    },
+    {
+      "cveId": "CVE-2022-35754"
+    },
+    {
+      "cveId": "CVE-2022-35755"
+    },
+    {
+      "cveId": "CVE-2022-35756"
+    },
+    {
+      "cveId": "CVE-2022-35758"
+    },
+    {
+      "cveId": "CVE-2022-35759"
+    },
+    {
+      "cveId": "CVE-2022-35760"
+    },
+    {
+      "cveId": "CVE-2022-35761"
+    },
+    {
+      "cveId": "CVE-2022-35762"
+    },
+    {
+      "cveId": "CVE-2022-35763"
+    },
+    {
+      "cveId": "CVE-2022-35764"
+    },
+    {
+      "cveId": "CVE-2022-35765"
+    },
+    {
+      "cveId": "CVE-2022-35767"
+    },
+    {
+      "cveId": "CVE-2022-35768"
+    },
+    {
+      "cveId": "CVE-2022-35769"
+    },
+    {
+      "cveId": "CVE-2022-35771"
+    },
+    {
+      "cveId": "CVE-2022-35792"
+    },
+    {
+      "cveId": "CVE-2022-35793"
+    },
+    {
+      "cveId": "CVE-2022-35795"
+    },
+    {
+      "cveId": "CVE-2022-35820"
+    },
+    {
+      "cveId": "CVE-2022-35822"
+    }
+  ],
+  "affected": [
+    "Xerox FreeFlow Print Server v2"
+  ],
+  "severity": "hoch"
+}

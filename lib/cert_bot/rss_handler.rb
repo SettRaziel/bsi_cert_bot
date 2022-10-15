@@ -38,7 +38,7 @@ module CertBot
           if (contraints_fulfilled(item, csv_accessor.data, severities, is_updated))
             @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
             csv_accessor.append_row([ item_wid, item.pubDate.localtime ])
-            CertBot::MailAgent.send_mail(item, config_file)
+            process_item(item, config_file)
           end
         }
       end
@@ -102,6 +102,18 @@ module CertBot
         return false if (CertBot::Data::UpdateStatus.get_mapping_for(update_status) != :new)
       end
       true
+    end
+
+    # method to generate the required output for a given item of the rss feed
+    # @param [RSS:Item] item the rss item for a feed entry
+    # @param [String] config_file the file path to the configuration file
+    def process_item(item, config_file)
+      if (CertBot.parameter_handler.repository.parameters[:json])
+        CertBot::JsonGenerator.generate_json(item, Pathname.new(config_file).join("..").expand_path)
+      else
+        CertBot::MailAgent.send_mail(item, config_file)      
+      end
+      nil
     end
 
   end

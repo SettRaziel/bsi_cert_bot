@@ -9,7 +9,7 @@ module CertBot
   module MailAgent
 
     # method to generate a mail for a given item of the rss feed
-    # @param [Item] item the rss item for a feed entry
+    # @param [RSS:Item] item the rss item for a feed entry
     # @param [String] config_file the file path to the configuration file
     # @return [String] them mail message
     def self.send_mail(item, config_file)

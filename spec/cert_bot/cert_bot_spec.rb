@@ -18,7 +18,7 @@ describe CertBot do
   end
 
   describe "#parse_rss" do
-    context "given runtime parameters for the script" do
+    context "(internet) given runtime parameters for the script" do
       it "start the script and create messages without an error" do
         arguments = ["-s", "high", "--file", TEST_DATA.join("config.json").to_s]
         CertBot.initialize(arguments)
@@ -34,7 +34,7 @@ describe CertBot do
   end
 
   describe "#parse_rss" do
-    context "given runtime parameters for the script with json parameter" do
+    context "(internet) given runtime parameters for the script with json parameter" do
       it "start the script and create messages without an error" do
         arguments = ["-s", "high", "--json", "--file", TEST_DATA.join("config.json").to_s]
         CertBot.initialize(arguments)

@@ -5,7 +5,7 @@ require_relative "../../lib/cert_bot/rss_handler"
 describe CertBot::RssHandler do
 
   describe ".read_feed" do
-    context "given an rss feed, severities and a config_file" do
+    context "(internet) given an rss feed, severities and a config_file" do
       it "create the mail text for the rss feed without an error" do
         arguments = ["-s", "high", "--file", TEST_DATA.join("config.json").to_s]
         CertBot.initialize(arguments)
@@ -26,7 +26,7 @@ describe CertBot::RssHandler do
   end
 
   describe ".read_feed" do
-    context "given an rss feed, severities, a config_file and the flag to parse all advisories" do
+    context "(internet) given an rss feed, severities, a config_file and the flag to parse all advisories" do
       it "create the mail text for the rss feed without an error" do
         arguments = ["-s", "high", "--file", TEST_DATA.join("config.json").to_s]
         CertBot.initialize(arguments)
@@ -47,7 +47,7 @@ describe CertBot::RssHandler do
   end
 
   describe ".read_feed" do
-    context "given an rss feed, severities, the json flag, a config_file and the flag to parse all advisories" do
+    context "(internet) given an rss feed, severities, the json flag, a config_file and the flag to parse all advisories" do
       it "create the mail text for the rss feed without an error" do
         arguments = ["-s", "high", "--json", "--file", TEST_DATA.join("config.json").to_s]
         CertBot.initialize(arguments)

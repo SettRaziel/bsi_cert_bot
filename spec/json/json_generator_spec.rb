@@ -5,7 +5,7 @@ require_relative "../../lib/cert_bot/json/json_generator"
 describe CertBot::JsonGenerator do
   
   describe ".generate_json" do
-    context "given an advisory item" do
+    context "(internet) given an advisory item" do
       it "read it and create the correct json output" do
         File.open(TEST_DATA.join("rss_sample").expand_path) do |rss|
           feed = RSS::Parser.parse(rss)

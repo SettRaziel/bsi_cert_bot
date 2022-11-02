@@ -1,5 +1,5 @@
 require "spec_helper"
-require_relative "../../lib/cert_bot/csv_accessor"
+require_relative "../../lib/cert_bot/io"
 
 describe CertBot::CsvAccessor do
 

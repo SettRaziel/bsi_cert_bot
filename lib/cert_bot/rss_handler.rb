@@ -3,10 +3,9 @@ require "open-uri"
 require "pathname"
 
 require_relative "mail_agent"
-require_relative "csv_accessor"
+require_relative "io"
 require_relative "data"
 require_relative "advisory_parser"
-require_relative "data/update_status"
 require_relative "json/json_generator"
 
 module CertBot

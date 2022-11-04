@@ -31,7 +31,7 @@ CERT bot help:
 The BSI gives a severity for the published advisories with different levels and input for the 
 [severity rating](https://wid.cert-bund.de/portal/wid/fragenundantworten). The entries in the bracket
 are the possible values for the severity parameter:
-* low: ["low" "niedrig"]
+* low: ["low", "niedrig"]
 * medium: ["medium", "mittel"]
 * high: ["high", "hoch"]
 * critical: ["critical", "kritisch"]

@@ -3,10 +3,9 @@ require "open-uri"
 require "pathname"
 
 require_relative "mail_agent"
-require_relative "csv_accessor"
+require_relative "io"
 require_relative "data"
 require_relative "advisory_parser"
-require_relative "data/update_status"
 require_relative "json/json_generator"
 
 module CertBot
@@ -93,7 +92,7 @@ module CertBot
     # @param [Array] csv_data the list of items that already have been processed in previous script calls
     # @param [Array] severities the list of severities that needs to be sent
     # @param [Bool] is_updated true if the parameter was set, nil otherwise
-    # @param [Bool] the boolean that shows if the contraints are fulfilled of not
+    # @return [Bool] the boolean that shows if the contraints are fulfilled of not
     def contraints_fulfilled(item, csv_data, severities, is_updated)
       item_wid = item.link.split("=")[1]
       return false if (contains_values?(item_wid, item.pubDate.localtime, csv_data))

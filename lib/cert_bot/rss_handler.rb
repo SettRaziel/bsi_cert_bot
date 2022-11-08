@@ -28,7 +28,9 @@ module CertBot
     # @param [Bool] is_updated true if the parameter was set, nil otherwise
     def read_feed(severities, is_updated)
       @debug_log.puts("Starting rss parsing at #{Time.now}.")
-      csv_accessor = init_csv_accessor(Pathname.new(@config_path).join("meta_info").expand_path)
+      meta_path = Pathname.new(@config_path).join("meta_info").expand_path
+      CertBot::CacheCleaner.delete_old_entries(meta_path)
+      csv_accessor = init_csv_accessor(meta_path)
 
       URI.open(@rss_feed) do |rss|
         feed = RSS::Parser.parse(rss)

@@ -26,9 +26,10 @@ describe CertBot::AdvisoryParser do
     context "(internet) given a wid number for a advisory" do
       it "call rest apis and get the product hash for the advisory" do
         product_list = CertBot::AdvisoryParser.retrieve_affected_products("WID-SEC-2022-0666")
-        expect(product_list.length).to eq(2)
-        expect(product_list[1]["name"]).to eq("Open Source libguestfs < 1.48")
-        expect(product_list[0]["name"]).to eq("SUSE Linux")
+        expect(product_list.length).to eq(3)
+        expect(product_list[2]["name"]).to eq("Open Source libguestfs < 1.48")
+        expect(product_list[1]["name"]).to eq("SUSE Linux")
+        expect(product_list[0]["name"]).to eq("Red Hat Enterprise Linux")
       end
     end
   end

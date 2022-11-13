@@ -16,7 +16,9 @@ module CertBot
       entries = Array.new()
       last_week = Time.now() - (3600 * 24 * 7) # substract 7 days
       cache_data.each { |entry|
-        entries << entry if (last_week < Time.parse(entry[1]))
+        if (!entry.nil? && entry.length == 2)
+          entries << entry if (last_week < Time.parse(entry[1]))
+        end
       }
       write_data(entries, filepath)
       nil

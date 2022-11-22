@@ -32,6 +32,7 @@ module CertBot
       determine_tls_veryfication
     end
 
+    # method to determine if the authtype is set and set its value based on the input
     def determine_authtype
       case @config_hash["authtype"]
         when "login" then @config_hash["authtype"] = :login
@@ -41,6 +42,7 @@ module CertBot
       end
     end
 
+    # method to determine if the tls flag is set and set its value based on the input
     def determine_tls_veryfication
       case @config_hash["tls_verify"]
         when "false" then @config_hash["tls_verify"] = false

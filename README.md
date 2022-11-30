@@ -61,10 +61,13 @@ Specify JSON parameters for usage in config.json
   "user":"user",
   "password":"password",
   "from":"sender address",
-  "to":"recipient address"
+  "to":"recipient address",
+  "authtype":"plain", # optional
+  "tls_verify":"true", # optional
+  "tls_hostname":"nil" # optional
 }
 ```
-and set the path for the configuration class to get your values set.
+and set the path for the configuration class to get your values set. A few parameter are optional and will be set with default values if not present.
 
 ## Example Mail
 ```

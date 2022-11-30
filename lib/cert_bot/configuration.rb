@@ -17,7 +17,8 @@ module CertBot
 
     private
 
-    # method to check if the given keys are available in the json hash
+    # method to check if the required keys are available in the json hash
+    # and check for optional ones
     # @raise KeyError if a given key is missing in the config hash
     def check_config_keys
       raise KeyError, "JSON key address missing"   if (@config_hash["address"] == nil)
@@ -27,6 +28,27 @@ module CertBot
       raise KeyError, "JSON key password missing"  if (@config_hash["password"]  == nil)
       raise KeyError, "JSON key from missing"      if (@config_hash["from"]  == nil)
       raise KeyError, "JSON key to missing"        if (@config_hash["to"]  == nil)
+      determine_authtype
+      determine_tls_veryfication
+    end
+
+    # method to determine if the authtype is set and set its value based on the input
+    def determine_authtype
+      case @config_hash["authtype"]
+        when "login" then @config_hash["authtype"] = :login
+        when "md5" then @config_hash["authtype"] = :cram_md5
+      else 
+        @config_hash["authtype"] = :plain
+      end
+    end
+
+    # method to determine if the tls flag is set and set its value based on the input
+    def determine_tls_veryfication
+      case @config_hash["tls_verify"]
+        when "false" then @config_hash["tls_verify"] = false
+      else 
+        @config_hash["tls_verify"] = true
+      end
     end
 
   end

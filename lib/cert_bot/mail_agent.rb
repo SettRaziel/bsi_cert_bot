@@ -85,8 +85,10 @@ module CertBot
     end
 
     private_class_method def self.call_smtp(message, config)
-      Net::SMTP.start(config.config_hash["address"], config.config_hash["port"], config.config_hash["helo"], 
-                      config.config_hash["user"], config.config_hash["password"], :plain) do |smtp|
+      Net::SMTP.start(config.config_hash["address"], config.config_hash["port"], helo: config.config_hash["helo"], 
+                      user: config.config_hash["user"], secret: config.config_hash["password"], 
+                      authtype: config.config_hash["authtype"], tls_verify: config.config_hash["tls_verify"],
+                      tls_hostname: config.config_hash["tls_hostname"]) do |smtp|
         smtp.send_message(message, config.config_hash["from"], config.config_hash["to"])
       end
       nil

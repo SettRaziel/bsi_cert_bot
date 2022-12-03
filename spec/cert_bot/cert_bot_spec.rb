@@ -27,7 +27,6 @@ describe CertBot do
         CertBot.parse_rss
 
         # clean up data from the test and catch errors since they should not let the test fail
-        File.delete(TEST_DATA.join("debug.log"))
         File.delete(TEST_DATA.join("meta_info"))
       end
     end
@@ -41,7 +40,6 @@ describe CertBot do
         CertBot.parse_rss
 
         # clean up data from the test and catch errors since they should not let the test fail
-        File.delete(TEST_DATA.join("debug.log"))
         File.delete(TEST_DATA.join("meta_info"))
         Dir[File.join(TEST_DATA, 'WID-SEC-*.json')].each { |file| File.delete(file) }
       end

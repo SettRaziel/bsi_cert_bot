@@ -18,16 +18,19 @@ module CertBot
     # @param [String] config_file the file path to the configuration file
     def initialize(rss_feed, config_file)
       @config_path = Pathname.new(config_file).dirname.expand_path
-      @debug_log = File.open(@config_path.join("debug.log"), mode="a")
       @rss_feed = rss_feed
       @config_file = config_file
+
+      if (CertBot.parameter_handler != nil && CertBot.parameter_handler.repository.parameters[:debug])
+        @debug_log = File.open(@config_path.join("debug.log"), mode="a")
+      end
     end
 
     # method to parse the feed and generate mails for the required items
     # @param [Array] severities the list of severities that should be parsed from the feed
     # @param [Bool] is_updated true if the parameter was set, nil otherwise
     def read_feed(severities, is_updated)
-      @debug_log.puts("Starting rss parsing at #{Time.now}.")
+      write_debug_log("Starting rss parsing at #{Time.now}.")
       meta_path = Pathname.new(@config_path).join("meta_info").expand_path
       CertBot::CacheCleaner.delete_old_entries(meta_path)
       csv_accessor = init_csv_accessor(meta_path)
@@ -36,17 +39,18 @@ module CertBot
         feed = RSS::Parser.parse(rss)
         feed.items.each { |item|
           item_wid = item.link.split("=")[1]
-          @debug_log.puts("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
+          write_debug_log("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
           if (contraints_fulfilled(item, csv_accessor.data, severities, is_updated))
-            @debug_log.puts("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
+            write_debug_log("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
             csv_accessor.append_row([ item_wid, item.pubDate.localtime ])
             process_item(item, config_file)
           end
         }
       end
-      @debug_log.puts("Finishing rss parsing at #{Time.now}.")
-      @debug_log.puts
-      @debug_log.close
+      write_debug_log("Finishing rss parsing at #{Time.now}.\n")
+      if (CertBot.parameter_handler != nil && CertBot.parameter_handler.repository.parameters[:debug])
+        @debug_log.close
+      end
       nil
     end
 
@@ -116,6 +120,12 @@ module CertBot
         CertBot::MailAgent.send_mail(item, config_file)      
       end
       nil
+    end
+
+    def write_debug_log(log_text)
+      if (CertBot.parameter_handler != nil && CertBot.parameter_handler.repository.parameters[:debug])
+        @debug_log.puts(log_text)
+      end
     end
 
   end

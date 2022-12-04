@@ -13,6 +13,8 @@ module CertBot
             "also sends an e-mail for updated advisories")
       add_simple_text(:json, " -j, --json      ", 
             "writes advisories as json objects into a file instead of sending an e-mail")
+      add_simple_text(:debug, " -d, --debug     ", 
+            "script call does additional debug logging")
       nil
     end
 

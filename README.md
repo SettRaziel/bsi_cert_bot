@@ -24,6 +24,7 @@ CERT bot help:
  -f, --file      argument: <filename>; parameter that indicates a filepath to the config json file
  -u, --updated   also sends an e-mail for updated advisories
  -j, --json      writes advisories as json objects into a file instead of sending an e-mail
+ -d, --debug     script call does additional debug logging
  -s, --severity  argument: <severity>; specifies the severity threshold when a severity should sent an e-mail
  ```
 
@@ -68,6 +69,10 @@ Specify JSON parameters for usage in config.json
 }
 ```
 and set the path for the configuration class to get your values set. A few parameter are optional and will be set with default values if not present.
+
+Additionally if the script runs into trouble there are some basic debug information that can be used to check for bugs and anormal behavior. To use this debug
+output that is stored in the same directory as the config.json can be activated by using the debug flag `-d` oder `--debug`. This will add which advisory is
+read and which does generate a new entry based on the script parameter.
 
 ## Example Mail
 ```

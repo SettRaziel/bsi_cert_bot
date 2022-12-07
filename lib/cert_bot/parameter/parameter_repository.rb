@@ -15,6 +15,7 @@ module CertBot
       # @param [String] arg the given argument
       def process_argument(arg)
         case arg
+          when *@mapping[:debug] then @parameters[:debug] = true
           when *@mapping[:json] then @parameters[:json] = true
           when *@mapping[:severity] then create_argument_entry(:severity)
           when *@mapping[:updated] then @parameters[:updated] = true
@@ -26,6 +27,7 @@ module CertBot
 
       # method to define the input string values that will match a given paramter symbol
       def define_mapping
+        @mapping[:debug] = ["-d", "--debug"]
         @mapping[:json] = ["-j", "--json"]
         @mapping[:severity] = ["-s", "--severity"]
         @mapping[:updated] = ["-u", "--updated"]

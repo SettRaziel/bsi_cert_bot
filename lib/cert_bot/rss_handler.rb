@@ -122,10 +122,13 @@ module CertBot
       nil
     end
 
+    # method to write a given debug text into the logfile if the debug parameter is set
+    # @param [String] log_text the logging string
     def write_debug_log(log_text)
       if (CertBot.parameter_handler != nil && CertBot.parameter_handler.repository.parameters[:debug])
         @debug_log.puts(log_text)
       end
+      nil
     end
 
   end

@@ -58,8 +58,8 @@ Specify JSON parameters for usage in config.json
   "address":"sender mail domain",
   "port":"587",
   "helo":"sender mail helo",
-  "user":"user",
-  "password":"password",
+  "user":"user", # optional
+  "password":"password", # optional
   "from":"sender address",
   "to":"recipient address",
   "authtype":"plain", # optional

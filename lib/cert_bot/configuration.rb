@@ -24,8 +24,6 @@ module CertBot
       raise KeyError, "JSON key address missing"   if (@config_hash["address"] == nil)
       raise KeyError, "JSON key port missing"      if (@config_hash["port"]  == nil)
       raise KeyError, "JSON key helo missing"      if (@config_hash["helo"]  == nil)
-      raise KeyError, "JSON key user missing"      if (@config_hash["user"]  == nil)
-      raise KeyError, "JSON key password missing"  if (@config_hash["password"]  == nil)
       raise KeyError, "JSON key from missing"      if (@config_hash["from"]  == nil)
       raise KeyError, "JSON key to missing"        if (@config_hash["to"]  == nil)
       determine_authtype

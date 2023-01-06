@@ -11,10 +11,11 @@ module CertBot
 
     # method to read a given file and clean up entries older than seven days
     # @param [Filepath] filepath the path to the file with the csv formatted advisory information
-    def self.delete_old_entries(filepath)
+    # @param [Integer] duration the duration the cache saves the entries
+    def self.delete_old_entries(filepath, duration = 14)
       cache_data = read_data(filepath)
       entries = Array.new()
-      last_week = Time.now() - (3600 * 24 * 14) # substract 14 days
+      last_week = Time.now() - (3600 * 24 * duration) # substract the duration days
       cache_data.each { |entry|
         if (!entry.nil? && entry.length == 2)
           entries << entry if (last_week < Time.parse(entry[1]))

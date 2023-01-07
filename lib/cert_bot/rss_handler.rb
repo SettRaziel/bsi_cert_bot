@@ -32,7 +32,6 @@ module CertBot
     def read_feed(severities, is_updated)
       write_debug_log("Starting rss parsing at #{Time.now}.")
       meta_path = Pathname.new(@config_path).join("meta_info").expand_path
-      CertBot::CacheCleaner.delete_old_entries(meta_path)
       csv_accessor = init_csv_accessor(meta_path)
 
       URI.open(@rss_feed) do |rss|
@@ -46,7 +45,11 @@ module CertBot
             process_item(item, config_file)
           end
         }
+
+        days_oldest_entry = ((Time.now - feed.items.last.pubDate.localtime)/ (3600 *24)).ceil
+        CertBot::CacheCleaner.delete_old_entries(meta_path, days_oldest_entry)
       end
+
       write_debug_log("Finishing rss parsing at #{Time.now}.\n")
       if (CertBot.parameter_handler != nil && CertBot.parameter_handler.repository.parameters[:debug])
         @debug_log.close

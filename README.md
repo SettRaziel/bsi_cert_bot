@@ -4,7 +4,7 @@ govermental institution for information security in germany)
 CERT [RSS feed](https://wid.cert-bund.de/content/public/securityAdvisory/rss) and 
 parses CERT reports to be send to the given mail address.
 
-Current version: v0.2.0
+Current version: v0.2.1
 
 ## Installation
 * check for ruby and bundler on the target machine

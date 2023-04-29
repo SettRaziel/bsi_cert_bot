@@ -2,7 +2,7 @@
   "wid": "WID-SEC-2022-1251",
   "title": "Xerox FreeFlow Print Server: Mehrere Schwachstellen",
   "description": "Ein entfernter, anonymer Angreifer kann mehrere Schwachstellen in Xerox FreeFlow Print Server ausnutzen, um die Vertraulichkeit, Verfügbarkeit und Integrität des Systems zu gefährden.",
-  "hash": "https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1251",
+  "link": "https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1251",
   "release": "Thu, 01 Sep 2022 13:11:37 +0200",
   "status": "New",
   "cves": [

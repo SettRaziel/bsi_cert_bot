@@ -24,7 +24,7 @@ module CertBot
       json_hash[:wid] = wid
       json_hash[:title] = item.title
       json_hash[:description] = item.description
-      json_hash[:hash] = item.link
+      json_hash[:link] = item.link
       json_hash[:release] = timestamp
       json_hash[:status] = update_status
       json_hash[:cves] = cve_list

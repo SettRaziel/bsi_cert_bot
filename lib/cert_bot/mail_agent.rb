@@ -28,7 +28,7 @@ module CertBot
       message.concat("Date: #{timestamp}\n")
       message.concat("Status: #{update_status}\n")
       message.concat("Severity: #{item.category.content}\n")
-      #message.concat(retrieve_cvss_score)
+      message.concat(retrieve_cvss_score(wid))
       message.concat("#{retrieve_cves(wid)}")
       message.concat("\n#{retrieve_affected_products(wid)}")
       message.concat("WID: #{wid}\n\n")
@@ -49,7 +49,7 @@ module CertBot
       "Our CERT RSS Feed received an updated security advisory:\n\n"
     end
 
-    # private method to retrieve the cves and put them into the output string to the mail
+    # private method to retrieve the cves and create an output string for the mail
     # @param [String] wid the id of the advisory
     # @return [String] the output string for the mail text
     private_class_method def self.retrieve_cves(wid)
@@ -71,7 +71,7 @@ module CertBot
       cves
     end 
 
-    # private method to retrieve the affected products and put them into the output string to the mail
+    # private method to retrieve the affected products and create an output string for the mail
     # @param [String] wid the id of the advisory
     # @return [String] the output string for the mail text
     private_class_method def self.retrieve_affected_products(wid)
@@ -83,6 +83,14 @@ module CertBot
         affected_products.concat(product["name"]).concat("\n")
       }
       affected_products
+    end
+
+    # private method to retrieve the cvss score and create an output string for the mail
+    # @param [String] wid the id of the advisory
+    # @return [String] the output string for the mail text
+    private_class_method def self.retrieve_cvss_score(wid)
+      cvss_score = CertBot::AdvisoryParser.retrieve_cvss_score(wid)
+      "CVSS Score (#{cvss_score["version"]}): #{cvss_score["temporalscore"]/10.0}\n"
     end
 
     private_class_method def self.call_smtp(message, config)

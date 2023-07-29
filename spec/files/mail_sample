@@ -9,6 +9,7 @@ Description: Ein entfernter, anonymer Angreifer kann mehrere Schwachstellen in X
 Link: https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1251
 Date: Thu, 01 Sep 2022 13:11:37 +0200
 Status: New
+Severity: hoch
 CVEs: CVE-2020-0689 CVE-2022-1529 CVE-2022-1802 CVE-2022-1919 CVE-2022-21911
       CVE-2022-2200 CVE-2022-26832 CVE-2022-29909 CVE-2022-29910 CVE-2022-29911
       CVE-2022-29912 CVE-2022-29914 CVE-2022-29915 CVE-2022-29916 CVE-2022-29917
@@ -32,7 +33,6 @@ CVEs: CVE-2020-0689 CVE-2022-1529 CVE-2022-1802 CVE-2022-1919 CVE-2022-21911
      
 Affected versions:
       Xerox FreeFlow Print Server v2
-Severity: hoch
 WID: WID-SEC-2022-1251
 
 Best wishes,

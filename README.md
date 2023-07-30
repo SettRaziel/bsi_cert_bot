@@ -83,10 +83,11 @@ Description: Ein Angreifer kann eine Schwachstelle im Linux Kernel ausnutzen, um
 Link: https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1360
 Date: Fri, 09 Sep 2022 10:11:37 +0200
 Status: New
+Severity: hoch
+CVSS Score (3.1): 7.2
 CVEs: CVE-2022-40307
 Affected versions:
       Open Source Linux Kernel <= 5.19.8
-Severity: hoch
 WID: WID-SEC-2022-1360
 
 Best wishes,

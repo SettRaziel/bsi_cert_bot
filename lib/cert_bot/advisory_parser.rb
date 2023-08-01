@@ -41,6 +41,14 @@ module CertBot
       cert_json["properties"]["updatetype"]
     end
 
+    # method to retrieve the cvss values of the advisory
+    # @param[String] wid the wid of the advisory
+    # @return [Hash] the hash with the cvss score values
+    def self.retrieve_cvss_score(wid)
+      cert_json = AdvisoryParser.get_and_parse_advisory(wid)
+      filter_flat_map(cert_json, "scoreListe") {|score_list|  filter_flat_map(score_list, "score") {|note| note["properties"] } }[0]
+    end
+
     # private helper method the traverse the json and find the entries of the given type in the list
     # @param [Hash] list the subtree of the json that need to be checked to entries of the given type
     # @param [String] type the keyword that is searched for

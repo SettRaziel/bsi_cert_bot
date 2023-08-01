@@ -45,4 +45,13 @@ describe CertBot::AdvisoryParser do
     end
   end
 
+  describe "#retrieve_cvss_score" do
+    context "(internet) given a wid number for a advisory" do
+      it "call rest apis and get the cvss score for the advisory" do
+        cvss_score = CertBot::AdvisoryParser.retrieve_cvss_score("WID-SEC-2022-0666")
+        expect(cvss_score["temporalscore"]).to eq(48)
+      end
+    end
+  end
+
 end

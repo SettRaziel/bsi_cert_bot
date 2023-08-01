@@ -15,6 +15,7 @@ module CertBot
       timestamp = item.pubDate.localtime
       update_status = CertBot::AdvisoryParser.retrieve_update_status(wid)
       cve_list = CertBot::AdvisoryParser.retrieve_cves(wid)
+      cvss_entry = CertBot::AdvisoryParser.retrieve_cvss_score(wid)
       product_list = Array.new() 
       CertBot::AdvisoryParser.retrieve_affected_products(wid).each { |product|
         product_list << product["name"]
@@ -28,6 +29,7 @@ module CertBot
       json_hash[:release] = timestamp
       json_hash[:status] = update_status
       json_hash[:cves] = cve_list
+      json_hash[:cvss] = cvss_entry["temporalscore"]/10.0
       json_hash[:affected] = product_list
       json_hash[:severity] = item.category.content
 

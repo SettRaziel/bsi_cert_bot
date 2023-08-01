@@ -4,7 +4,7 @@ govermental institution for information security in germany)
 CERT [RSS feed](https://wid.cert-bund.de/content/public/securityAdvisory/rss) and 
 parses CERT reports to be send to the given mail address.
 
-Current version: v0.2.1
+Current version: v0.2.2
 
 ## Installation
 * check for ruby and bundler on the target machine
@@ -41,6 +41,12 @@ So an example call for sending only messages for high or critical advisories can
 ```
 ruby cert_bot.rb -s high -f <path_to_config.json>
 ```
+
+### CVSS Score
+The CERT Advisories from the BSI show two ratings for CVSS score:
+* base score: score for qualities intrinsic to a vulnerability
+* temporal score: score evolvement over the lifetime of a vulnerability
+The CVSS score used in the current mail and json output states the temporal score of a vulnerability in sync with the rating of the BSI severity rating.
 
 ### Updated Advisories
 Published advisories change over time. They can get additional affected products, vulnerabilities or information links. 

@@ -46,6 +46,7 @@ ruby cert_bot.rb -s high -f <path_to_config.json>
 The CERT Advisories from the BSI show two ratings for CVSS score:
 * base score: score for qualities intrinsic to a vulnerability
 * temporal score: score evolvement over the lifetime of a vulnerability
+
 The CVSS score used in the current mail and json output states the temporal score of a vulnerability in sync with the rating of the BSI severity rating.
 
 ### Updated Advisories

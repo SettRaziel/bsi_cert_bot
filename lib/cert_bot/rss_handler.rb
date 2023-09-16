@@ -34,7 +34,7 @@ module CertBot
       meta_path = Pathname.new(@config_path).join("meta_info").expand_path
       csv_accessor = init_csv_accessor(meta_path)
 
-      URI.open(@rss_feed) do |rss|
+      URI(@rss_feed).open do |rss|
         feed = RSS::Parser.parse(rss)
         feed.items.each { |item|
           item_wid = item.link.split("=")[1]

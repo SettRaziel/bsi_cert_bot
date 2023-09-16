@@ -25,6 +25,7 @@ ENV["TZ"] = "Europe/Berlin"
 
 PROJECT_ROOT = Pathname.new(__dir__).expand_path
 TEST_DATA = PROJECT_ROOT.join("files/").expand_path
+RSS_FEED = "https://wid.cert-bund.de/content/public/securityAdvisory/rss"
 
 require "rspec"
 require_relative "../lib/cert_bot"

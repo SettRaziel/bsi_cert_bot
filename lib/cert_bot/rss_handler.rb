@@ -118,7 +118,8 @@ module CertBot
     # @param [String] config_file the file path to the configuration file
     def process_item(item, config_file)
       if (CertBot.parameter_handler != nil && CertBot.parameter_handler.repository.parameters[:json] != nil)
-        CertBot::JsonGenerator.generate_json(item, Pathname.new(config_file).join("..").expand_path)
+        output_dir = Pathname.new(CertBot.parameter_handler.repository.parameters[:json])
+        CertBot::JsonGenerator.generate_json(item, output_dir.expand_path)
       else
         CertBot::MailAgent.send_mail(item, config_file)      
       end

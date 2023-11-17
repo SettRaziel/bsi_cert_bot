@@ -31,7 +31,7 @@ describe CertBot::RssHandler do
   describe ".read_feed" do
     context "(internet) given an rss feed, severities, the json flag, a config_file and the flag to parse all advisories" do
       it "create the json items for the rss feed without an error" do
-        arguments = ["-s", "high", "--json", "--file", TEST_DATA.join("config.json").to_s]
+        arguments = ["-s", "high", "--json", TEST_DATA.expand_path, "--file", TEST_DATA.join("config.json").to_s]
         CertBot.initialize(arguments)
 
         allow(CertBot::MailAgent).to(receive(:call_smtp))

@@ -9,8 +9,8 @@ module CertBot
 
     # Method to generate a JSON Object for the advisory item and write it to the config path
     # @param [RSS:Item] item an advisory item from the rss feed
-    # @param [Pathname] config_path the path where the json object should be stored
-    def self.generate_json(item, config_path)
+    # @param [Pathname] output_path the path where the json object should be stored
+    def self.generate_json(item, output_path)
       wid = item.link.split("=")[1]
       timestamp = item.pubDate.localtime
       update_status = CertBot::AdvisoryParser.retrieve_update_status(wid)
@@ -34,8 +34,8 @@ module CertBot
       json_hash[:severity] = item.category.content
 
       output_string = JSON.pretty_generate(json_hash)
-      if (config_path != nil)
-        file = File.open(File.join(config_path,"#{wid}_#{timestamp.strftime("%Y_%m_%d_%H")}.json"), "w")
+      if (output_path != nil)
+        file = File.open(File.join(output_path,"#{wid}_#{timestamp.strftime("%Y_%m_%d_%H")}.json"), "w")
         file.write(output_string)
         file.close
       end

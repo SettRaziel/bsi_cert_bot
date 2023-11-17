@@ -16,9 +16,9 @@ describe CertBot::Parameter::ParameterRepository do
   describe ".new" do
     context "given the json flag" do
       it "create the repository with the correct flags" do
-        arguments = ["-j", "--file", "filename"]
+        arguments = ["-j", "output_dir", "--file", "filename"]
         parameter_repository = CertBot::Parameter::ParameterRepository.new(arguments)
-        expect(parameter_repository.parameters[:json]).to eq(true)
+        expect(parameter_repository.parameters[:json]).to eq("output_dir")
       end
     end
   end
@@ -26,9 +26,9 @@ describe CertBot::Parameter::ParameterRepository do
   describe ".new" do
     context "given the json flag" do
       it "create the repository with the correct flags" do
-        arguments = ["--json", "--file", "filename"]
+        arguments = ["--json", "output_dir", "--file", "filename"]
         parameter_repository = CertBot::Parameter::ParameterRepository.new(arguments)
-        expect(parameter_repository.parameters[:json]).to eq(true)
+        expect(parameter_repository.parameters[:json]).to eq("output_dir")
       end
     end
   end

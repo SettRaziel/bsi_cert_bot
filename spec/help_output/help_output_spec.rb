@@ -9,8 +9,8 @@ describe CertBot::HelpOutput do
         expect { 
           CertBot::HelpOutput.print_help_for(:json) 
         }.to output("CERT bot help:".light_yellow + "\n" + \
-                    " -j, --json      ".light_blue +  \
-                    "writes advisories as json objects into a file instead of sending an e-mail\n").to_stdout
+                    " -j, --json      ".light_blue + "argument:".red + " <filepath>".yellow  +  \
+                    "; writes advisories as json objects into a file instead of sending an e-mail to the given directory\n").to_stdout
       end
     end
   end
@@ -78,12 +78,12 @@ describe CertBot::HelpOutput do
                     "; parameter that indicates a filepath to the config json file\n" + \
                     " -u, --updated   ".light_blue +  \
                     "also sends an e-mail for updated advisories\n" + \
-                    " -j, --json      ".light_blue +  \
-                    "writes advisories as json objects into a file instead of sending an e-mail\n" + \
                     " -d, --debug     ".light_blue +  \
                     "script call does additional debug logging\n" + \
                     " -s, --severity  ".light_blue + "argument:".red + " <severity>".yellow  + \
-                    "; specifies the severity threshold when a severity should sent an e-mail\n").to_stdout
+                    "; specifies the severity threshold when a severity should sent an e-mail\n" + \
+                    " -j, --json      ".light_blue + "argument:".red + " <filepath>".yellow  + \
+                    "; writes advisories as json objects into a file instead of sending an e-mail to the given directory\n").to_stdout
       end
     end
   end  

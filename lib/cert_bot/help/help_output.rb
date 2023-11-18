@@ -11,8 +11,6 @@ module CertBot
     def self.add_single_help_entries
       add_simple_text(:updated, " -u, --updated   ", 
             "also sends an e-mail for updated advisories")
-      add_simple_text(:json, " -j, --json      ", 
-            "writes advisories as json objects into a file instead of sending an e-mail")
       add_simple_text(:debug, " -d, --debug     ", 
             "script call does additional debug logging")
       nil
@@ -24,6 +22,8 @@ module CertBot
             "; parameter that indicates a filepath to the config json file")
       add_single_argument_text(:severity, " -s, --severity  ", " <severity>",
             "; specifies the severity threshold when a severity should sent an e-mail")
+      add_single_argument_text(:json, " -j, --json      ", " <filepath>",
+            "; writes advisories as json objects into a file instead of sending an e-mail to the given directory")
       nil
     end
 

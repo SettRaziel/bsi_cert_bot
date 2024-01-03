@@ -58,7 +58,7 @@ module CertBot
       cves = "CVEs:"
       counter = 0
       cve_list.each { |cve_id|
-        cves.concat(" ").concat(cve_id["cveId"])
+        cves.concat(" ").concat(cve_id)
         counter += 1
 
         # write only 5 cve per line then make linebreak

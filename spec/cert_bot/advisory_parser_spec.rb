@@ -18,7 +18,7 @@ describe CertBot::AdvisoryParser do
       it "call rest apis and get the cve hash for the advisory" do
         cve_list = CertBot::AdvisoryParser.retrieve_cves("WID-SEC-2022-0666")
         expect(cve_list.length).to eq(1)
-        expect(cve_list[0]["cveId"]).to eq("CVE-2022-2211")
+        expect(cve_list[0]).to eq("CVE-2022-2211")
       end
     end
   end

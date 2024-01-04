@@ -20,10 +20,15 @@ module CertBot
     end
 
     # method to retrieve the list of cves from the advisory json
-    # @return [Array] an array with key-value pairs {"cveId"=>"<CVE-number>"}
+    # @return [Array] an array with the cve identifiers
     def self.retrieve_cves(wid)
       cert_json = AdvisoryParser.get_and_parse_advisory(wid)
-      filter_flat_map(cert_json, "cveIdListe") {|cve_id_list| filter_flat_map(cve_id_list, "cveId") {|note| note["properties"] } }
+      cve_ids = filter_flat_map(cert_json, "cveIdListe") {|cve_id_list| filter_flat_map(cve_id_list, "cveId") {|note| note["properties"] } }
+      results = Array.new()
+      cve_ids.each { |cve_id| 
+        results << cve_id["cveId"]
+      }
+      results
     end
 
     # method to retrieve the list of affected products from the advisory json

@@ -109,7 +109,11 @@
   ],
   "cvss": 8.5,
   "affected": [
-    "Xerox FreeFlow Print Server v2"
+    {
+      "name": "Xerox FreeFlow Print Server v2",
+      "cpeversion": "v2",
+      "cpeproduct": "cpe:/a:xerox:freeflow_print_server"
+    }
   ],
   "severity": "hoch"
 }

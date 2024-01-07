@@ -18,7 +18,11 @@ module CertBot
       cvss_entry = CertBot::AdvisoryParser.retrieve_cvss_score(wid)
       product_list = Array.new() 
       CertBot::AdvisoryParser.retrieve_affected_products(wid).each { |product|
-        product_list << product["name"]
+        product_attributes = Hash.new()
+        product_attributes["name"] = product["name"]
+        product_attributes["cpeversion"] = product["cpeversion"]
+        product_attributes["cpeproduct"] = product["cpeproduct"]
+        product_list << product_attributes
       }
       
       json_hash = Hash.new()

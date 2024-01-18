@@ -7,7 +7,8 @@ parses CERT reports to be send to the given mail address.
 Current version: v0.3.0
 
 ## Installation
-* check for ruby and bundler on the target machine
+* check for installed git
+* check for installed ruby programming language and installed bundler gem on the target machine
 * clone the repository
 * run `bundle install` to get the required gems
 * setup config.json
@@ -81,6 +82,10 @@ Additionally if the script runs into trouble there are some basic debug informat
 output that is stored in the same directory as the config.json can be activated by using the debug flag `-d` oder `--debug`. This will add which advisory is
 read and which does generate a new entry based on the script parameter.
 
+### Automated usage
+* via cronjob (hourly): `00 *  * * * ruby /path/to/bin/cert_bot.rb -d -s high -f /path/to/config.json`
+* systemd-timer (in preparation): --
+
 ## Example Mail
 ```
 Our CERT RSS Feed received a new security advisory:
@@ -99,6 +104,32 @@ WID: WID-SEC-2022-1360
 
 Best wishes,
 Your CERT Bot.
+```
+
+## JSON Output
+Instead of an e-mail the flag `-j` or `--json` creates a JSON formatted output file for a given advisory. This file can be written to a given location. An example can look like this:
+```
+{
+  "wid": "WID-SEC-2022-1251",
+  "title": "Xerox FreeFlow Print Server: Mehrere Schwachstellen",
+  "description": "Ein entfernter, anonymer Angreifer kann mehrere Schwachstellen in Xerox FreeFlow Print Server ausnutzen, um die Vertraulichkeit, Verfügbarkeit und Integrität des Systems zu gefährden.",
+  "link": "https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1251",
+  "release": "Thu, 01 Sep 2022 13:11:37 +0200",
+  "status": "New",
+  "cves": [
+    "CVE-2020-0689",
+    "CVE-2022-35822"
+  ],
+  "cvss": 8.5,
+  "affected": [
+    {
+      "name": "Xerox FreeFlow Print Server v2",
+      "cpeversion": "v2",
+      "cpeproduct": "cpe:/a:xerox:freeflow_print_server"
+    }
+  ],
+  "severity": "hoch"
+}
 ```
 
 ## Used Version

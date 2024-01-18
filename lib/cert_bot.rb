@@ -58,7 +58,7 @@ module CertBot
 
   # call to print version number and author
   def self.print_version
-    puts "cert_bot version 0.3.0".yellow
+    puts "cert_bot version 0.4.0".yellow
     puts "Created by Benjamin Held (Juli 2022)".yellow
     nil
   end

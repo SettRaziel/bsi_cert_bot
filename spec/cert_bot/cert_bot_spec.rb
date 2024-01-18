@@ -53,7 +53,7 @@ describe CertBot do
           arguments = ["--version"]
           CertBot.initialize(arguments)
           CertBot.print_version
-        }.to output("cert_bot version 0.3.0".yellow + "\n" + \
+        }.to output("cert_bot version 0.4.0".yellow + "\n" + \
                     "Created by Benjamin Held (Juli 2022)".yellow + "\n").to_stdout
       end
     end

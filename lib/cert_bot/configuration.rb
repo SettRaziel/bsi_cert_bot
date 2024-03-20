@@ -1,19 +1,10 @@
+require "ruby_utils/configuration"
 require "json"
 
 module CertBot
 
   # Simple data class to store the json parameter
-  class Configuration
-
-    # @return [Hash] the hash with the hashes of the given json file  
-    attr_reader :config_hash
-
-    # initialization
-    # @param [Pathname] config_path the filepath the the json configuration file
-    def initialize(config_path)
-      @config_hash = JSON.load(File.read(config_path))
-      check_config_keys
-    end
+  class Configuration < RubyUtils::Configuration::BaseConfigurationRepository
 
     private
 
@@ -21,11 +12,11 @@ module CertBot
     # and check for optional ones
     # @raise KeyError if a given key is missing in the config hash
     def check_config_keys
-      raise KeyError, "JSON key address missing"   if (@config_hash["address"] == nil)
-      raise KeyError, "JSON key port missing"      if (@config_hash["port"]  == nil)
-      raise KeyError, "JSON key helo missing"      if (@config_hash["helo"]  == nil)
-      raise KeyError, "JSON key from missing"      if (@config_hash["from"]  == nil)
-      raise KeyError, "JSON key to missing"        if (@config_hash["to"]  == nil)
+      required_config_key_available?("address")
+      required_config_key_available?("port")
+      required_config_key_available?("helo")
+      required_config_key_available?("from")
+      required_config_key_available?("to")
       determine_authtype
       determine_tls_veryfication
     end

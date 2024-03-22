@@ -4,7 +4,7 @@ govermental institution for information security in germany)
 CERT [RSS feed](https://wid.cert-bund.de/content/public/securityAdvisory/rss) and 
 parses CERT reports to be send to the given mail address.
 
-Current version: v0.4.0
+Current version: v0.4.1
 
 ## Installation
 * check for installed git

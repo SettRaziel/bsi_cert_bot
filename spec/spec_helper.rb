@@ -117,7 +117,6 @@ RSpec.configure do |config|
     Kernel.srand config.seed
   end
 
-  
   # create forecasts for tests
   config.before(:suite) do
     day_seconds = 3600 * 24

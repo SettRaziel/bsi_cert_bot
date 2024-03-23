@@ -1,5 +1,4 @@
 require "ruby_utils/configuration"
-require "json"
 
 module CertBot
 

@@ -131,6 +131,8 @@ Instead of an e-mail the flag `-j` or `--json` creates a JSON formatted output f
   "severity": "hoch"
 }
 ```
+The JSON output does contain additional information in comparison to the mail: it does hold the cpe (common platform enumeration) in version 2.2.
+Version 2.3 does not seem to be supported within the BSI informations.
 
 ## Used Version
 Written with Ruby >= 3.1

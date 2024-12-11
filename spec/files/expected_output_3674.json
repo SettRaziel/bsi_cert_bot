@@ -1,0 +1,46 @@
+{
+  "wid": "WID-SEC-2024-3674",
+  "title": "[NEU] [hoch] Splunk Splunk Enterprise: Mehrere Schwachstellen",
+  "description": "Ein Angreifer kann mehrere Schwachstellen in Splunk Splunk Enterprise ausnutzen, um vertrauliche Informationen offenzulegen, Sicherheitsmaßnahmen zu umgehen, beliebigen Code auszuführen oder unspezifische Angriffe durchzuführen.",
+  "link": "https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2024-3674",
+  "release": "Wed, 11 Dec 2024 13:11:55 +0100",
+  "status": "New",
+  "cves": [
+    "CVE-2021-44531",
+    "CVE-2024-25710",
+    "CVE-2024-26308",
+    "CVE-2024-36114",
+    "CVE-2024-36129",
+    "CVE-2024-4067",
+    "CVE-2024-42459",
+    "CVE-2024-42460",
+    "CVE-2024-42461",
+    "CVE-2024-45296",
+    "CVE-2024-5535",
+    "CVE-2024-6531",
+    "CVE-2024-53243",
+    "CVE-2024-53244",
+    "CVE-2024-53245",
+    "CVE-2024-53246",
+    "CVE-2024-53247"
+  ],
+  "cvss": 7.7,
+  "affected": [
+    {
+      "name": "Splunk Splunk Enterprise <9.3.2",
+      "cpeversion": "9.3.2",
+      "cpeproduct": "cpe:/a:splunk:splunk"
+    },
+    {
+      "name": "Splunk Splunk Enterprise <9.2.4",
+      "cpeversion": "9.2.4",
+      "cpeproduct": "cpe:/a:splunk:splunk"
+    },
+    {
+      "name": "Splunk Splunk Enterprise <9.1.7",
+      "cpeversion": "9.1.7",
+      "cpeproduct": "cpe:/a:splunk:splunk"
+    }
+  ],
+  "severity": "hoch"
+}

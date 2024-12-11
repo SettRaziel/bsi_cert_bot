@@ -6,16 +6,32 @@ describe CertBot::JsonGenerator do
   
   describe ".generate_json" do
     context "(internet) given an advisory item" do
-      it "read it and create the correct json output" do
+      it "read it and create the correct json output for 2022-1251" do
         File.open(TEST_DATA.join("rss_sample").expand_path) do |rss|
           feed = RSS::Parser.parse(rss)
           CertBot::JsonGenerator.generate_json(feed.items[3], TEST_DATA.expand_path)
         end
         expect(FileUtils.compare_file(File.join(TEST_DATA.expand_path,"WID-SEC-2022-1251_2022_09_01_13.json"), 
-                                      File.join(TEST_DATA.expand_path,"expected_output.json"))).to be_truthy
+                                      File.join(TEST_DATA.expand_path,"expected_output_1251.json"))).to be_truthy
 
         # clean up data from the test and catch errors since they should not let the test fail
         File.delete(File.join(TEST_DATA.expand_path,"WID-SEC-2022-1251_2022_09_01_13.json"))
+      end
+    end
+  end
+
+  describe ".generate_json" do
+    context "(internet) given an advisory item" do
+      it "read it and create the correct json output for 2024-3674" do
+        File.open(TEST_DATA.join("rss_sample").expand_path) do |rss|
+          feed = RSS::Parser.parse(rss)
+          CertBot::JsonGenerator.generate_json(feed.items[4], TEST_DATA.expand_path)
+        end
+        expect(FileUtils.compare_file(File.join(TEST_DATA.expand_path,"WID-SEC-2024-3674_2024_12_11_13.json"), 
+                                      File.join(TEST_DATA.expand_path,"expected_output_3674.json"))).to be_truthy
+
+        # clean up data from the test and catch errors since they should not let the test fail
+        File.delete(File.join(TEST_DATA.expand_path,"WID-SEC-2024-3674_2024_12_11_13.json"))
       end
     end
   end

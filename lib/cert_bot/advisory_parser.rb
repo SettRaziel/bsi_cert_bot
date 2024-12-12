@@ -23,7 +23,7 @@ module CertBot
     # @return [Array] an array with the cve identifiers
     def self.retrieve_cves(wid)
       cert_json = AdvisoryParser.get_and_parse_advisory(wid)
-      cve_ids = filter_flat_map(cert_json, "cveIdListe") {|cve_id_list| filter_flat_map(cve_id_list, "cveId") {|note| note["properties"] } }
+      cve_ids = filter_flat_map(cert_json, "cveIdListe") { |cve_id_list| filter_flat_map(cve_id_list, "cveId") { |note| note["properties"] } }
       results = Array.new()
       cve_ids.each { |cve_id| 
         results << cve_id["cveId"]
@@ -35,7 +35,14 @@ module CertBot
     # @return [Array] an array with key-value pairs {"productReference"=>"<product>"}
     def self.retrieve_affected_products(wid)
       cert_json = AdvisoryParser.get_and_parse_advisory(wid)
-      filter_flat_map(cert_json, "productReferenceListe") {|cve_id_list| filter_flat_map(cve_id_list, "productReference") {|note| note["properties"] } }
+      product_list = filter_flat_map(cert_json, "productReferenceListe") { |cve_id_list| 
+        filter_flat_map(cve_id_list, "productReference") {|note| note["properties"] }
+      }
+      results = Array.new()
+      product_list.each { |entry|
+        results << entry if (! entry["id"].include?("-fixed"))
+      }
+      results
     end
 
     # method to retrieve the update status of the advisory
@@ -51,7 +58,7 @@ module CertBot
     # @return [Hash] the hash with the cvss score values
     def self.retrieve_cvss_score(wid)
       cert_json = AdvisoryParser.get_and_parse_advisory(wid)
-      filter_flat_map(cert_json, "scoreListe") {|score_list|  filter_flat_map(score_list, "score") {|note| note["properties"] } }[0]
+      filter_flat_map(cert_json, "scoreListe") { |score_list|  filter_flat_map(score_list, "score") { |note| note["properties"] } }[0]
     end
 
     # private helper method the traverse the json and find the entries of the given type in the list

@@ -34,11 +34,11 @@
       <pubDate>Thu, 01 Sep 2022 11:11:37 GMT</pubDate>
     </item>
     <item>
-      <title>VMware Tools: Schwachstelle ermöglicht Privilegieneskalation</title>
-      <link>https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1159</link>
-      <description>Ein lokaler Angreifer kann eine Schwachstelle in VMware Tools ausnutzen, um seine Privilegien zu erhöhen.</description>
-      <category>mittel</category>
-      <pubDate>Thu, 01 Sep 2022 11:11:30 GMT</pubDate>
+      <title>[NEU] [hoch] Splunk Splunk Enterprise: Mehrere Schwachstellen</title>
+      <link>https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2024-3674</link>
+      <description>Ein Angreifer kann mehrere Schwachstellen in Splunk Splunk Enterprise ausnutzen, um vertrauliche Informationen offenzulegen, Sicherheitsmaßnahmen zu umgehen, beliebigen Code auszuführen oder unspezifische Angriffe durchzuführen.</description>
+      <category>hoch</category>
+      <pubDate>Wed, 11 Dec 2024 12:11:55 GMT</pubDate>
     </item>
     <item>
       <title>zlib: Schwachstelle ermöglicht nicht spezifizierten Angriff</title>

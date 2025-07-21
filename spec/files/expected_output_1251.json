@@ -115,5 +115,8 @@
       "cpeproduct": "cpe:/a:xerox:freeflow_print_server"
     }
   ],
+  "fixed": [
+
+  ],
   "severity": "hoch"
 }

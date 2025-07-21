@@ -25,6 +25,7 @@ module CertBot
       json_hash[:cves] = CertBot::AdvisoryParser.retrieve_cves(wid)
       json_hash[:cvss] = cvss_entry["temporalscore"]/10.0
       json_hash[:affected] = create_product_list(CertBot::AdvisoryParser.retrieve_affected_products(wid))
+      json_hash[:fixed] = create_product_list(CertBot::AdvisoryParser.retrieve_fixed_products(wid))
       json_hash[:severity] = item.category.content
 
       output_string = JSON.pretty_generate(json_hash)

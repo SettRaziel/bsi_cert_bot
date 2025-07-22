@@ -37,7 +37,7 @@ module CertBot
       nil
     end
 
-    def self.create_product_list(products)
+    private_class_method def self.create_product_list(products)
       product_list = Array.new() 
         products.each { |product|
         product_attributes = Hash.new()

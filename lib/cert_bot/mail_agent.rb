@@ -30,7 +30,10 @@ module CertBot
       message.concat("Severity: #{item.category.content}\n")
       message.concat(retrieve_cvss_score(wid))
       message.concat("#{retrieve_cves(wid)}")
-      message.concat("\n#{retrieve_affected_products(wid)}")
+      message.concat("\n#{retrieve_products(CertBot::AdvisoryParser.retrieve_affected_products(wid), 
+                     "Affected versions")}")
+      message.concat("#{retrieve_products(CertBot::AdvisoryParser.retrieve_fixed_products(wid), 
+                     "Fixed versions")}")
       message.concat("WID: #{wid}\n\n")
       message.concat("Best wishes,\n")
       message.concat("Your CERT Bot.")
@@ -71,13 +74,11 @@ module CertBot
       cves
     end 
 
-    # private method to retrieve the affected products and create an output string for the mail
-    # @param [String] wid the id of the advisory
+    # private method to retrieve the products and create an output string for the mail
+    # @param [Array] product_list the list of products
     # @return [String] the output string for the mail text
-    private_class_method def self.retrieve_affected_products(wid)
-      product_list = CertBot::AdvisoryParser.retrieve_affected_products(wid)
-
-      affected_products = "Affected versions:\n"
+    private_class_method def self.retrieve_products(product_list, title)
+      affected_products = "#{title}:\n"
       product_list.each { |product|
         6.times { affected_products.concat(" ") }
         affected_products.concat(product["name"]).concat("\n")

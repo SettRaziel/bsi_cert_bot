@@ -6,11 +6,11 @@
     <description>BSI Warn- und Informationsdienst (WID) RSS Feed zur Verteilung Schwachstellen-Informationen (Security Advisories)</description>
     <pubDate>Thu, 01 Sep 2022 13:16:43 GMT</pubDate>
     <item>
-      <title>Apache ActiveMQ Artemis: Schwachstelle ermöglicht Darstellen falscher Informationen</title>
-      <link>https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2022-1069</link>
-      <description>Ein entfernter, anonymer Angreifer kann eine Schwachstelle in Apache ActiveMQ Artemis ausnutzen, um falsche Informationen darzustellen.</description>
-      <category>mittel</category>
-      <pubDate>Thu, 01 Sep 2022 11:41:17 GMT</pubDate>
+      <title>[UPDATE] [kritisch] Microsoft SharePoint (On-premises): Mehrere Schwachstellen</title>
+      <link>https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2025-1598</link>
+      <description>Ein entfernter anonymer oder authentifizierter Angreifer kann mehrere Schwachstellen in Microsoft SharePoint Server 2019, Microsoft SharePoint Subscription Edition und Microsoft SharePoint Server 2016 ausnutzen, um beliebigen Code auszuführen und Spoofing-Angriffe durchzuführen.</description>
+      <category>kritisch</category>
+      <pubDate>Tue, 22 Jul 2025 05:16:52 GMT</pubDate>
     </item>
     <item>
       <title>D-LINK Router: Mehrere Schwachstellen</title>

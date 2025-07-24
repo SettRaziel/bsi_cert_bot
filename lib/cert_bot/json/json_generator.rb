@@ -14,6 +14,8 @@ module CertBot
       wid = item.link.split("=")[1]
       timestamp = item.pubDate.localtime
       cvss_entry = CertBot::AdvisoryParser.retrieve_cvss_score(wid)
+      fixed_list = create_product_list(CertBot::AdvisoryParser.retrieve_fixed_products(wid))
+      fixed_list << "none" if (fixed_list.empty?)
       
       json_hash = Hash.new()
       json_hash[:wid] = wid
@@ -25,7 +27,7 @@ module CertBot
       json_hash[:cves] = CertBot::AdvisoryParser.retrieve_cves(wid)
       json_hash[:cvss] = cvss_entry["temporalscore"]/10.0
       json_hash[:affected] = create_product_list(CertBot::AdvisoryParser.retrieve_affected_products(wid))
-      json_hash[:fixed] = create_product_list(CertBot::AdvisoryParser.retrieve_fixed_products(wid))
+      json_hash[:fixed] = fixed_list
       json_hash[:severity] = item.category.content
 
       output_string = JSON.pretty_generate(json_hash)

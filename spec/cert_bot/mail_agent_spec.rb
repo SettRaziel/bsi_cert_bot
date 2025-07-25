@@ -18,4 +18,17 @@ describe CertBot::MailAgent do
     end
   end
 
+  describe "#send_mail" do
+    context "(internet) given an advisory item and a config_file" do
+      it "create the mail text for a new advisory without an error" do
+        File.open(TEST_DATA.join("rss_sample").expand_path) do |rss|
+          feed = RSS::Parser.parse(rss)
+          allow(CertBot::MailAgent).to(receive(:call_smtp))
+          message = CertBot::MailAgent.send_mail(feed.items[0], TEST_DATA.join("config.json").expand_path)
+          expect(message).to eq(File.read(TEST_DATA.join("mail_sample_sharepoint").expand_path))
+        end
+      end
+    end
+  end
+
 end

@@ -13,17 +13,9 @@ module CertBot
     def self.generate_json(item, output_path)
       wid = item.link.split("=")[1]
       timestamp = item.pubDate.localtime
-      update_status = CertBot::AdvisoryParser.retrieve_update_status(wid)
-      cve_list = CertBot::AdvisoryParser.retrieve_cves(wid)
       cvss_entry = CertBot::AdvisoryParser.retrieve_cvss_score(wid)
-      product_list = Array.new() 
-      CertBot::AdvisoryParser.retrieve_affected_products(wid).each { |product|
-        product_attributes = Hash.new()
-        product_attributes["name"] = product["name"]
-        product_attributes["cpeversion"] = product["cpeversion"]
-        product_attributes["cpeproduct"] = product["cpeproduct"]
-        product_list << product_attributes
-      }
+      fixed_list = create_product_list(CertBot::AdvisoryParser.retrieve_fixed_products(wid))
+      fixed_list << "none" if (fixed_list.empty?)
       
       json_hash = Hash.new()
       json_hash[:wid] = wid
@@ -31,10 +23,11 @@ module CertBot
       json_hash[:description] = item.description
       json_hash[:link] = item.link
       json_hash[:release] = timestamp
-      json_hash[:status] = update_status
-      json_hash[:cves] = cve_list
+      json_hash[:status] = CertBot::AdvisoryParser.retrieve_update_status(wid)
+      json_hash[:cves] = CertBot::AdvisoryParser.retrieve_cves(wid)
       json_hash[:cvss] = cvss_entry["temporalscore"]/10.0
-      json_hash[:affected] = product_list
+      json_hash[:affected] = create_product_list(CertBot::AdvisoryParser.retrieve_affected_products(wid))
+      json_hash[:fixed] = fixed_list
       json_hash[:severity] = item.category.content
 
       output_string = JSON.pretty_generate(json_hash)
@@ -44,6 +37,18 @@ module CertBot
         file.close
       end
       nil
+    end
+
+    private_class_method def self.create_product_list(products)
+      product_list = Array.new() 
+        products.each { |product|
+        product_attributes = Hash.new()
+        product_attributes["name"] = product["name"]
+        product_attributes["cpeversion"] = product["cpeversion"]
+        product_attributes["cpeproduct"] = product["cpeproduct"]
+        product_list << product_attributes
+      }
+      product_list
     end
 
   end

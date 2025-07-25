@@ -1,0 +1,29 @@
+From: CERT RSS <mail@example.com>
+To: mail@example.com
+Subject: CERT Report (WID-SEC-2025-1598) - [UPDATE] [kritisch] Microsoft SharePoint (On-premises)
+
+Our CERT RSS Feed received an updated security advisory:
+
+Title: [UPDATE] [kritisch] Microsoft SharePoint (On-premises): Mehrere Schwachstellen
+Description: Ein entfernter anonymer oder authentifizierter Angreifer kann mehrere Schwachstellen in Microsoft SharePoint Server 2019, Microsoft SharePoint Subscription Edition und Microsoft SharePoint Server 2016 ausnutzen, um beliebigen Code auszuführen und Spoofing-Angriffe durchzuführen.
+Link: https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2025-1598
+Date: Tue, 22 Jul 2025 07:16:52 +0200
+Status: Silent-Update
+Severity: kritisch
+CVSS Score (3.1): 9.4
+CVEs: CVE-2025-53770 CVE-2025-53771
+Affected versions:
+      Microsoft SharePoint Server 2019 <KB5002754
+      Microsoft SharePoint Subscription Edition <KB5002768
+      Microsoft SharePoint Server 2016
+      Microsoft SharePoint Server 2019 <KB5002741 Build 16.0.10417.20027
+      Microsoft SharePoint Server 2016 <KB5002744 Build 16.0.5508.1000
+Fixed versions:
+      Microsoft SharePoint Server 2019 KB5002754
+      Microsoft SharePoint Subscription Edition KB5002768
+      Microsoft SharePoint Server 2019 KB5002741 Build 16.0.10417.20027
+      Microsoft SharePoint Server 2016 KB5002744 Build 16.0.5508.1000
+WID: WID-SEC-2025-1598
+
+Best wishes,
+Your CERT Bot.

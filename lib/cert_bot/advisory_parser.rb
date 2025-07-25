@@ -45,6 +45,20 @@ module CertBot
       results
     end
 
+    # method to retrieve the list of fixed products from the advisory json
+    # @return [Array] an array with key-value pairs {"productReference"=>"<product>"}
+    def self.retrieve_fixed_products(wid)
+      cert_json = AdvisoryParser.get_and_parse_advisory(wid)
+      product_list = filter_flat_map(cert_json, "productReferenceListe") { |cve_id_list| 
+        filter_flat_map(cve_id_list, "productReference") {|note| note["properties"] }
+      }
+      results = Array.new()
+      product_list.each { |entry|
+        results << entry if (entry["id"].include?("-fixed"))
+      }
+      results
+    end
+
     # method to retrieve the update status of the advisory
     # @param[String] wid the wid of the advisory
     # @return [String] the string of the property update type

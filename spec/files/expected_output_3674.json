@@ -42,5 +42,22 @@
       "cpeproduct": "cpe:/a:splunk:splunk"
     }
   ],
+  "fixed": [
+    {
+      "name": "Splunk Splunk Enterprise 9.3.2",
+      "cpeversion": "9.3.2",
+      "cpeproduct": "cpe:/a:splunk:splunk"
+    },
+    {
+      "name": "Splunk Splunk Enterprise 9.2.4",
+      "cpeversion": "9.2.4",
+      "cpeproduct": "cpe:/a:splunk:splunk"
+    },
+    {
+      "name": "Splunk Splunk Enterprise 9.1.7",
+      "cpeversion": "9.1.7",
+      "cpeproduct": "cpe:/a:splunk:splunk"
+    }
+  ],
   "severity": "hoch"
 }

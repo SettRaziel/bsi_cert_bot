@@ -34,7 +34,7 @@
       <pubDate>Thu, 01 Sep 2022 11:11:37 GMT</pubDate>
     </item>
     <item>
-      <title>[NEU] [hoch] Splunk Splunk Enterprise: Mehrere Schwachstellen</title>
+      <title>[UPDATE] [hoch] Splunk Splunk Enterprise: Mehrere Schwachstellen</title>
       <link>https://wid.cert-bund.de/portal/wid/securityadvisory?name=WID-SEC-2024-3674</link>
       <description>Ein Angreifer kann mehrere Schwachstellen in Splunk Splunk Enterprise ausnutzen, um vertrauliche Informationen offenzulegen, Sicherheitsmaßnahmen zu umgehen, beliebigen Code auszuführen oder unspezifische Angriffe durchzuführen.</description>
       <category>hoch</category>

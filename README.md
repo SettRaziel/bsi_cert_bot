@@ -29,6 +29,10 @@ CERT bot help:
  -j, --json      argument: <filepath>; writes advisories as json objects into a file instead of sending an e-mail to the given directory
  ```
 
+## Documentation
+Documentation is written in yard and can be created by running the shell-script `create_yard.sh`. Yard needs to be installed on the system in order to do that.
+The documentation can also be found online [here](https://bheld.eu/doc/certbot_doc/index.html).
+
 ### Severity Ratings
 The BSI gives a severity for the published advisories with different levels and input for the 
 [severity rating](https://wid.cert-bund.de/portal/wid/fragenundantworten). The entries in the bracket

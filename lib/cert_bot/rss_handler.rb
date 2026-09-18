@@ -30,27 +30,31 @@ module CertBot
     # @param [Array] severities the list of severities that should be parsed from the feed
     # @param [Bool] is_updated true if the parameter was set, nil otherwise
     def read_feed(severities, is_updated)
-      write_debug_log("Starting rss parsing at #{Time.now}.")
+      write_debug_log("[#{Time.now}] Starting rss parsing.")
       meta_path = Pathname.new(@config_path).join("meta_info").expand_path
       csv_accessor = init_csv_accessor(meta_path)
 
-      URI(@rss_feed).open do |rss|
-        feed = RSS::Parser.parse(rss)
-        feed.items.each { |item|
-          item_wid = item.link.split("=")[1]
-          write_debug_log("Checking #{item_wid} (#{item.category.content}) at #{Time.now}")        
-          if (contraints_fulfilled(item, csv_accessor.data, severities, is_updated))
-            write_debug_log("Creating entry for #{item_wid} (#{item.category.content}) at #{Time.now}")
-            csv_accessor.append_row([ item_wid, item.pubDate.localtime ])
-            process_item(item, config_file)
-          end
-        }
+      begin
+        URI(@rss_feed).open do |rss|
+          feed = RSS::Parser.parse(rss)
+          feed.items.each { |item|
+            item_wid = item.link.split("=")[1]
+            write_debug_log("[#{Time.now}] Checking #{item_wid} (#{item.category.content}).")        
+            if (contraints_fulfilled(item, csv_accessor.data, severities, is_updated))
+              write_debug_log("[#{Time.now}] Creating entry for #{item_wid} (#{item.category.content}).")
+              csv_accessor.append_row([ item_wid, item.pubDate.localtime ])
+              process_item(item, config_file)
+            end
+          }
 
-        days_oldest_entry = ((Time.now - feed.items.last.pubDate.localtime)/ (3600 *24)).ceil
-        CertBot::CacheCleaner.delete_old_entries(meta_path, days_oldest_entry)
+          days_oldest_entry = ((Time.now - feed.items.last.pubDate.localtime)/ (3600 *24)).ceil
+          CertBot::CacheCleaner.delete_old_entries(meta_path, days_oldest_entry)
+        end
+      rescue StandardError => e
+        write_debug_log("[#{Time.now}] Error while parsing rss: #{e.message}.\n")
       end
 
-      write_debug_log("Finishing rss parsing at #{Time.now}.\n")
+      write_debug_log("[#{Time.now}] Finishing rss parsing.\n")
       if (CertBot.parameter_handler != nil && CertBot.parameter_handler.repository.parameters[:debug])
         @debug_log.close
       end

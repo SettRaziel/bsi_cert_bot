@@ -18,7 +18,7 @@ describe CertBot::RssHandler do
         csv_accessor.read_csv
         expect(File.exist?(debug_path)).to be_truthy
         wid_counter = 0
-        File.open(debug_path.expand_path).readlines.each { |line| wid_counter +=1 if (line.start_with?("Creating entry for"))}
+        File.open(debug_path.expand_path).readlines.each { |line| wid_counter +=1 if (line.include?("Creating entry for"))}
         expect(csv_accessor.data.length).to eq(wid_counter)
         
         # clean up data from the test and catch errors since they should not let the test fail
